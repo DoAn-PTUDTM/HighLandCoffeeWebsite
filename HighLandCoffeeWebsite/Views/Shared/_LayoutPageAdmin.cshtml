@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/AdminLayout.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="@Url.Content("~/Content/AdminIndex.css")" />
+
+
+</head>
+<body>
+    <div class="containerAdmin">
+        <div class="navAdmin">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class='bx bx-user-circle'></i></span>
+                        <span class="title">Brand Name</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Admin")">
+                        <span class="icon"><i class='bx bx-home'></i></span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><i class='bx bx-food-menu'></i></span>
+                        <span class="title">Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><i class='bx bxs-user-account'></i></span>
+                        <span class="title">Customers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class='bx bx-help-circle'></i></span>
+                        <span class="title">Help</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><i class='bx bx-cog'></i></span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><i class='bx bx-lock-alt'></i></span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><i class='bx bx-log-out'></i></span>
+                        <span class="title">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- MAIN -->
+        <div class="main">
+            <div class="top-nav">
+                <div class="toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+
+                <div class="searchAdmin">
+                    <label>
+                        <input type="text" placeholder="Search here" />
+                        <div class="icon-card"><i class='bx bx-search-alt-2'></i></div>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <a href="">
+                        <img src="~/Content/img/2.jpg" />
+                    </a>
+                </div>
+            </div>
+
+
+            <div>
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+</body>
+</html>
