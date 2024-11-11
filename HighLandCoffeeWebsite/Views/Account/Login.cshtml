@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="~/Content/index.css" />
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<div class="content">
+    <section>
+        <h2 class="title">More Than Just a Coffee Bean</h2>
+        <p class="subtitle">
+            A unique flavor, each recipe is made from more than two coffees. <br>You Can’t Buy
+            Happiness,
+            But You Can Buy Our Coffee, and That’s Pretty Close.
+        </p>
+        <div><a href="@Url.Action("Index", "Home")" class="get-started">Get Started</a></div>
+    </section>
+
+    <form method="post" action="@Url.Action("Login", "Account")">
+        <h1 class="title">Welcome</h1>
+
+        <div class="box">
+            <div class="icon"><i class="bx bx-user-circle"></i></div>
+            <div class="input-box">
+                <label class="label">Enter your name</label>
+                <input type="text" class="input" name="Username" required />
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="icon"><i class="bx bx-lock"></i></div>
+            <div class="input-box">
+                <label class="label">Enter your Password</label>
+                <input type="password" class="input" name="Password" required />
+            </div>
+        </div>
+
+        <div class="forgot"><a href="#">Forgot password</a></div>
+
+        <input type="submit" class="login-button" value="Login" />
+
+        <div class="sign">Not a member? <a href="@Url.Action("Register", "Account")">Sign up now</a></div>
+    </form>
+</div>
+
+<script src="~/Scripts/index.js"></script>
+<script>
+    const inputs = document.querySelectorAll(".input");
+
+    function addFocus() {
+        this.parentNode.parentNode.classList.add("focus"); // input-box
+    }
+
+    function removeFocus() {
+        if (this.value == "") {
+            this.parentNode.parentNode.classList.remove("focus");
+        }
+    }
+
+    inputs.forEach(i => {
+        i.addEventListener("focus", addFocus);
+        i.addEventListener("blur", removeFocus);
+    });
+
+    const sr = ScrollReveal({
+        distance: '20px',
+        duration: 2000,
+        reset: true
+    });
+
+    sr.reveal(`section`, { interval: 200, origin: 'left' });
+    sr.reveal(`form`, { interval: 200, origin: 'right' });
+</script>

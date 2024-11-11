@@ -1,0 +1,73 @@
+﻿@model HighLandCoffeeWebsite.Models.Product
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link rel="stylesheet" href="~/Content/ProductDetails.css" />
+<div id="productinfor">
+    <div class="product_info_r">
+        <div class="product_wrap_r container">
+            <div class="row">
+                <div id="productinfor">
+                    <div class="product-image">
+                        <img src="@Url.Content(Model.ImageUrl)" alt="@Model.Name" />
+                    </div>
+
+                    <div class="product_info_r">
+                        <p class="info_product_title">@Model.Name</p>
+                        <div class="info_product_price">@Model.Price.ToString("C")</div>
+
+                        <div class="option_sizes">
+                            <p class="option_title">Chọn size</p>
+                            <div class="product_options" data-group="size">
+                                <div class="option_button" onclick="selectOption(this, 'size')">Nhỏ + 0 đ</div>
+                                <div class="option_button" onclick="selectOption(this, 'size')">Vừa + 4.000 đ</div>
+                            </div>
+                        </div>
+                        <div class="option_toppings">
+                            <p class="option_title">Lượng đá</p>
+                            <div class="product_options" data-group="ice">
+                                <div class="option_button" onclick="selectOption(this, 'ice')">Ít đá</div>
+                                <div class="option_button" onclick="selectOption(this, 'ice')">Không đá</div>
+                                <div class="option_button" onclick="selectOption(this, 'ice')">Bình thường</div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="product_buttons">
+                            <button class="order_button" onclick="">Thêm vào giỏ hàng</button>
+                            <button class="order_button" onclick="">Mua ngay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div>
+            <strong>Mô tả sản phẩm</strong><br />
+            @Model.Description
+        </div>
+        <hr />
+        <strong>Sản phẩm liên quan</strong><br />
+        <div class="related-products">
+            @foreach (var relatedProduct in ViewBag.RelatedProducts as List<HighLandCoffeeWebsite.Models.Product>)
+            {
+                <div class="product">
+                    <img src="@relatedProduct.ImageUrl" alt="@relatedProduct.Name" />
+                    <h4>@relatedProduct.Name</h4>
+                    <p>@relatedProduct.Price.ToString("C")</p>
+                    <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })">Xem chi tiết</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectOption(element, group) {
+        const options = document.querySelectorAll(`.product_options[data-group="${group}"] .option_button`);
+
+        options.forEach(option => option.classList.remove('selected'));
+
+        element.classList.add('selected');
+    }
+</script>

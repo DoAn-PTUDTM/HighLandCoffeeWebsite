@@ -1,0 +1,61 @@
+﻿@model HighLandCoffeeWebsite.Models.User
+@{
+    ViewBag.Title = "Thông tin khách hàng";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link rel="stylesheet" href="~/Content/UserInfo.css" />
+<div class="customer-info-page">
+    <div class="container user-info-container">
+        <h2 class="title">Thông tin khách hàng</h2>
+
+        <div class="customer-info">
+            <div class="info-item">
+                <span class="info-label">Tên đăng nhập:</span>
+                <span class="info-value">@Model.userName</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Mật khẩu:</span>
+                <span class="info-value">@Model.password</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Tên khách hàng:</span>
+                <span class="info-value">@Model.CustomerName</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email:</span>
+                <span class="info-value">@Model.Email</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Số điện thoại:</span>
+                <span class="info-value">@Model.PhoneNumber</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Địa chỉ:</span>
+                <span class="info-value">@Model.Address</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Vai trò:</span>
+                <span class="info-value">@((Model.Admin == 1) ? "Quản trị viên" : "Khách hàng")</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="@Url.Action("EditUserInfo", "Account", new { id = Model.userName })" class="btn btn-primary edit-button">Chỉnh sửa thông tin</a>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButton = document.querySelector(".edit-button");
+
+        editButton.addEventListener("mouseenter", function () {
+            editButton.style.transform = "scale(1.05)";
+            editButton.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.2)";
+        });
+
+        editButton.addEventListener("mouseleave", function () {
+            editButton.style.transform = "scale(1)";
+            editButton.style.boxShadow = "none";
+        });
+    });
+</script>

@@ -1,0 +1,78 @@
+﻿.customer-info-page {
+    padding-top: 150px;
+    padding-bottom: 50px;
+    background-color: #f0f4f8;
+}
+
+.user-info-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px 30px;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+    .title::after {
+        content: "";
+        width: 300px;
+        height: 3px;
+        background-color: #bf0000;
+        display: block;
+        margin: 8px auto 0;
+    }
+
+.customer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    padding: 12px 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.info-value {
+    color: #333;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.edit-button {
+    font-size: 16px;
+    padding: 12px 24px;
+    background-color: #bf0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    .edit-button:hover {
+        background-color: #bf0000;
+        transform: scale(1.05);
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
