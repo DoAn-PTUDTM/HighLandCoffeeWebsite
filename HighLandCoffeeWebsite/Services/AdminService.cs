@@ -115,5 +115,54 @@ namespace HighLandCoffeeWebsite.Services
             }
         }
 
+        public void updateSql(int id, string name, string description, decimal price, string img, int typeID)
+        {
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                if (connection.State == System.Data.ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                string selectStr = "SET DATEFORMAT DMY;UPDATE PRODUCTS SET NAME = 'N" + name + "', DESCRIPTION = 'N" + description + "', PRICE =" + price + ", ImageUrl = 'N" + img + "' , CATEGORYID =" + typeID + " WHERE PRODUCTID =" + id;
+                SqlCommand cmd = new SqlCommand(selectStr, connection);
+                cmd.ExecuteNonQuery();
+                if (connection.State == System.Data.ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        public Admin_Product getProductByID(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                if (connection.State == System.Data.ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                string selectStr = "SELECT * FROM PRODUCTS WHERE PRODUCTID =" + id;
+                SqlCommand cmd = new SqlCommand(selectStr, connection);
+                SqlDataReader rdr = cmd.ExecuteReader();
+                Admin_Product product = null;
+                while (rdr.Read())
+                {
+                    int pid = int.Parse(rdr["PRODUCTID"].ToString());
+                    string name = rdr["NAME"].ToString();
+                    string description = rdr["DESCRIPTION"].ToString();
+                    decimal price = decimal.Parse(rdr["PRICE"].ToString());
+                    string img = rdr["ImageUrl"].ToString();
+                    
+                    int typeID = int.Parse(rdr["CATEGORYID"].ToString());
+
+                    product = new Admin_Product(pid, name, description, price, img, typeID);
+                }
+                if (connection.State == System.Data.ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+                return product;
+            }
+        }
+
     }
 }

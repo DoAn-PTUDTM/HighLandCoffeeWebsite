@@ -80,5 +80,32 @@ namespace HighLandCoffeeWebsite.Controllers
             }
         }
 
+        public ActionResult UpdateProduct(int id)
+        {
+            Admin_Product p_ID = adminService.getProductByID(id);
+            return View(p_ID);
+        }
+        [HttpPost]
+        public ActionResult UpdateProduct(Admin_Product product)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    adminService.updateSql(product.productID, product.productName, product.productDescription, product.price, product.images, product.productTypeID);
+                    return RedirectToAction("ViewProduct");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+
+        }
+
     }
 }
