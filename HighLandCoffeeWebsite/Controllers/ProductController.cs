@@ -9,7 +9,8 @@ namespace HighLandCoffeeWebsite.Controllers
 {
     public class ProductController : Controller
     {
-        HIGHLANDCOFFEEDataContext db = new HIGHLANDCOFFEEDataContext();
+        
+        CoffeeDataContext db = new CoffeeDataContext();
         // GET: Product
         public ActionResult ViewProduct()
         {

@@ -23,7 +23,7 @@ namespace HighLandCoffeeWebsite.Models
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="HIGHLANDCOFFEE")]
-	public partial class HIGHLANDCOFFEEDataContext : System.Data.Linq.DataContext
+	public partial class CoffeeDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -56,30 +56,30 @@ namespace HighLandCoffeeWebsite.Models
     partial void DeleteUser(User instance);
         #endregion
 
-        public HIGHLANDCOFFEEDataContext() :
+        public CoffeeDataContext() :
                 base(global::System.Configuration.ConfigurationManager.ConnectionStrings["HIGHLANDCOFFEEConnectionString"].ConnectionString, mappingSource)
         {
             OnCreated();
         }
-        public HIGHLANDCOFFEEDataContext(string connection) : 
+        public CoffeeDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public HIGHLANDCOFFEEDataContext(System.Data.IDbConnection connection) : 
+		public CoffeeDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public HIGHLANDCOFFEEDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public CoffeeDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public HIGHLANDCOFFEEDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public CoffeeDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
