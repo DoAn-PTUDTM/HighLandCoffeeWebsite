@@ -107,5 +107,31 @@ namespace HighLandCoffeeWebsite.Controllers
 
         }
 
+        public ActionResult ResetPassword()
+        {
+            User currentUser = Session["user"] as User;
+            User_Admin user = adminService.getUserByID(currentUser.UserId);
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(User_Admin u)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    adminService.updatePassword(u.UserId, u.fullName, u.phone, u.email, u.password, u.confirmPassword, u.roleID);
+                    return View();// để tạm, cho hiện lên cập nhật thành công
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
     }
 }

@@ -55,6 +55,7 @@ namespace HighLandCoffeeWebsite.Models
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
         #endregion
+
         public HIGHLANDCOFFEEDataContext() :
                 base(global::System.Configuration.ConfigurationManager.ConnectionStrings["HIGHLANDCOFFEEConnectionString"].ConnectionString, mappingSource)
         {

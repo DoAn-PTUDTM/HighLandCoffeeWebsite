@@ -39,14 +39,14 @@
         <elementListCompartment Id="13a7b449-76fb-4d53-9ac4-35dc9ea49e9c" absoluteBounds="5.64, 3.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.625 : 4.7131982421875); (6.625 : 4.99685145833333); (2.875 : 4.99685145833333)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.625 : 4.7131982421875); (6.625 : 4.99685145833333); (4.09333333333333 : 4.99685145833333 : JumpStart); (3.92666666666667 : 4.99685145833333 : JumpEnd); (2.875 : 4.99685145833333)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HIGHLANDCOFFEEDataContext/Product/Product_OrderItem" />
       <nodes>
         <classShapeMoniker Id="6e5273be-8d57-44d8-8369-7a02ae6fa05e" />
         <classShapeMoniker Id="d5dd28e8-7262-4c53-8a3d-b4fe0ec847c0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.15625 : 1.81899251302083); (7.15625 : 2.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.5 : 1.81899251302083); (6.5 : 2.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HIGHLANDCOFFEEDataContext/Category/Category_Product" />
       <nodes>
         <classShapeMoniker Id="6b7972cc-d20a-4af7-81a7-0a875399e491" />
@@ -72,27 +72,27 @@
         <elementListCompartment Id="01f0d927-4653-4d09-a9f9-d9d9be018b5a" absoluteBounds="4.39, 5.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="48db6b6c-cffd-4a8b-bbd0-00e3c932375b" absoluteBounds="4.875, 1.25, 2, 2.3478011067708335">
+    <classShape Id="48db6b6c-cffd-4a8b-bbd0-00e3c932375b" absoluteBounds="0.5, 1.125, 2, 2.3478011067708335">
       <DataClassMoniker Name="/HIGHLANDCOFFEEDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="60446957-b20c-481f-b6b9-3f1950ae3bfd" absoluteBounds="4.89, 1.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="60446957-b20c-481f-b6b9-3f1950ae3bfd" absoluteBounds="0.51499999999999968, 1.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.875 : 2.71875); (3.80208333333333 : 2.71875 : JumpStart); (3.63541666666667 : 2.71875 : JumpEnd); (3.5 : 2.71875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.5 : 3.47280110677083); (1.5 : 5.03049967447917); (2.5 : 5.03049967447917); (2.5 : 4.78049967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HIGHLANDCOFFEEDataContext/User/User_New" />
       <nodes>
         <classShapeMoniker Id="48db6b6c-cffd-4a8b-bbd0-00e3c932375b" />
         <classShapeMoniker Id="c91eb865-7a4d-401e-8fe8-61c99000754e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.875 : 1.91909912109375); (3.875 : 1.91909912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.5 : 1.125); (1.5 : 0.375); (2.875 : 0.375); (2.875 : 0.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HIGHLANDCOFFEEDataContext/User/User_Order" />
       <nodes>
         <classShapeMoniker Id="48db6b6c-cffd-4a8b-bbd0-00e3c932375b" />
         <classShapeMoniker Id="ed79c13b-8a0e-4fec-9425-a1cc19c01256" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.875 : 2.42390055338542); (7.125 : 2.42390055338542); (7.125 : 3.66429768880208); (6.25 : 3.66429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(0.5 : 2.29890055338542); (0.26 : 2.29890055338542); (0.26 : 5.2481982421875); (4.01 : 5.2481982421875); (4.01 : 4.69359537760417); (4.9374995 : 4.69359537760417); (4.9374995 : 4.45359537760417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HIGHLANDCOFFEEDataContext/User/User_ShoppingCart" />
       <nodes>
         <classShapeMoniker Id="48db6b6c-cffd-4a8b-bbd0-00e3c932375b" />

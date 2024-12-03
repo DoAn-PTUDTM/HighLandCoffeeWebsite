@@ -123,7 +123,7 @@ namespace HighLandCoffeeWebsite.Services
                 {
                     connection.Open();
                 }
-                string selectStr = "SET DATEFORMAT DMY;UPDATE PRODUCTS SET NAME = 'N" + name + "', DESCRIPTION = 'N" + description + "', PRICE =" + price + ", ImageUrl = 'N" + img + "' , CATEGORYID =" + typeID + " WHERE PRODUCTID =" + id;
+                string selectStr = "SET DATEFORMAT DMY;UPDATE PRODUCTS SET NAME = N'" + name + "', DESCRIPTION = N'" + description + "', PRICE =" + price + ", ImageUrl = N'" + img + "' , CATEGORYID =" + typeID + " WHERE PRODUCTID =" + id;
                 SqlCommand cmd = new SqlCommand(selectStr, connection);
                 cmd.ExecuteNonQuery();
                 if (connection.State == System.Data.ConnectionState.Open)
@@ -164,5 +164,55 @@ namespace HighLandCoffeeWebsite.Services
             }
         }
 
+        public User_Admin getUserByID(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                if (connection.State == System.Data.ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                string selectStr = "SELECT * FROM USERS WHERE USERID =" + id;
+                SqlCommand cmd = new SqlCommand(selectStr, connection);
+                SqlDataReader rdr = cmd.ExecuteReader();
+                User_Admin user = null;
+                while (rdr.Read())
+                {
+                    int uID = int.Parse(rdr["USERID"].ToString());
+                    string name = rdr["USERNAME"].ToString();
+                    string phone = rdr["PHONE"].ToString();
+                    string email = rdr["EMAIL"].ToString();
+
+                    string address = rdr["ADDRESS"].ToString();
+                    string password = rdr["PASSWORD"].ToString();
+                    int roleID = int.Parse(rdr["ROLEID"].ToString());
+
+                    user = new User_Admin(uID, name, phone, email, address, password, roleID);
+                }
+                if (connection.State == System.Data.ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+                return user;
+            }
+        }
+        public void updatePassword(int userId, string fullName, string phone, string email, string password, string confirmPassword, int roleID)
+        {
+
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                if (connection.State == System.Data.ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                string selectStr = "SET DATEFORMAT DMY;UPDATE USERS SET USERNAME = '" + fullName + "', PHONE = '" + phone + ", EMAIL = '" + email + "' , ROLEID =" + roleID + " WHERE USERID =" + userId;
+                SqlCommand cmd = new SqlCommand(selectStr, connection);
+                cmd.ExecuteNonQuery();
+                if (connection.State == System.Data.ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }
