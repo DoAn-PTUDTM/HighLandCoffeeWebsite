@@ -8,22 +8,20 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/AdminLayout.css" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="@Url.Content("~/Content/AdminIndex.css")" />
 
 
 </head>
 <body>
-    <div class="containerAdmin">
         <div class="navAdmin">
             <ul>
                 <li>
                     <a href="#">
                         <span class="icon"><i class='bx bx-user-circle'></i></span>
-                        <span class="title">Brand Name</span>
+                        <span class="title">HighLand Coffee</span>
                     </a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index", "Admin")">
+                    <a href="@Url.Action("Dashboard", "Admin")">
                         <span class="icon"><i class='bx bx-home'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -35,7 +33,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="@Url.Action("Customer", "Admin")">
                         <span class="icon"><i class='bx bxs-user-account'></i></span>
                         <span class="title">Customers</span>
                     </a>
@@ -66,15 +64,9 @@
                     </a>
                 </li>
             </ul>
-        </div>
-
-        <!-- MAIN -->
-        <div class="main">
-            <div class="top-nav">
-                <div class="toggle">
-                    <i class='bx bx-menu'></i>
-                </div>
-
+        </div> 
+    <div class="main">
+            @*<div class="top-nav">
                 <div class="searchAdmin">
                     <label>
                         <input type="text" placeholder="Search here" />
@@ -87,19 +79,16 @@
                         <img src="~/Content/img/2.jpg" />
                     </a>
                 </div>
-            </div>
+            </div>*@
 
 
             <div>
                 @RenderBody()
             </div>
         </div>
-
-    </div>
-
+    <!-- solar icons -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-
 </body>
 </html>

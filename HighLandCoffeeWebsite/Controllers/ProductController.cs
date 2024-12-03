@@ -9,33 +9,79 @@ namespace HighLandCoffeeWebsite.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
+        private CoffeeDataContext db = new CoffeeDataContext();
+
         public ActionResult ViewProduct()
         {
-            return View();
+            var products = db.Products.ToList();
+            return View(products);
         }
-        private static List<Product> _products = new List<Product>
-    {
-        new Product { ProductId = 1, Name = "Cà phê sữa đá", Price = 30000, ImageUrl = "/Content/img/background.jpg", Description = "Cà phê đậm đà, thơm ngon, phù hợp cho mọi người yêu thích cà phê.", CategoryId = 1 },
-        new Product { ProductId = 2, Name = "Cà phê đen", Price = 25000, ImageUrl ="/Content/img/background.jpg", Description = "Cà phê đen nguyên chất, thích hợp cho những ai yêu thích vị đắng mạnh mẽ.", CategoryId = 1 },
-        new Product { ProductId = 3, Name = "Sinh tố trái cây", Price = 35000, ImageUrl = "/Content/img/banner-img.png", Description = "Sinh tố tươi ngon với nhiều loại trái cây, bổ dưỡng và mát lạnh.", CategoryId = 2 },
-        new Product { ProductId = 4, Name = "Trà sữa", Price = 20000, ImageUrl = "/Content/img/blog-img1.png", Description = "Trà sữa thơm ngon, ngọt ngào với hương vị trà và sữa đặc biệt.", CategoryId = 3 }
-    };
-        // GET: Product
+
         public ActionResult ProductDetails(int id)
         {
-            var product = _products.FirstOrDefault(p => p.ProductId == id);
+            var product = db.Products.FirstOrDefault(p => p.ProductId == id);
 
             if (product == null)
             {
                 return HttpNotFound();
             }
 
-            var relatedProducts = _products.Where(p => p.CategoryId == product.CategoryId && p.ProductId != id).Take(4).ToList();
+            var relatedProducts = db.Products
+                .Where(p => p.CategoryId == product.CategoryId && p.ProductId != id)
+                .Take(5)
+                .ToList();
 
             ViewBag.RelatedProducts = relatedProducts;
 
             return View(product);
+        }
+        [HttpPost]
+        public ActionResult AddToCart(int productId, int quantity, string size, int additionalPrice)
+        {
+            var product = db.Products.FirstOrDefault(p => p.ProductId == productId);
+
+            if (product == null)
+            {
+                return Json(new { success = false, message = "Sản phẩm không tồn tại" });
+            }
+
+            var user = Session["User"] as User;  // Cast session về kiểu User
+
+            // Kiểm tra nếu người dùng chưa đăng nhập
+            if (user == null)
+            {
+                return Json(new { success = false, message = "Bạn cần đăng nhập trước khi thêm sản phẩm vào giỏ hàng" });
+            }
+
+            // Lấy UserId từ người dùng
+            var userId = user.UserId;
+
+            // Kiểm tra xem người dùng đã có sản phẩm này trong giỏ hàng chưa
+            var existingItem = db.ShoppingCarts.FirstOrDefault(s => s.UserId == userId && s.ProductId == productId && s.Size == size);
+
+            if (existingItem != null)
+            {
+                // Nếu có, cập nhật số lượng
+                existingItem.Quantity += quantity;  // Cộng thêm số lượng vào
+                db.SubmitChanges();  // Lưu lại thay đổi
+                return Json(new { success = true, message = "Sản phẩm đã được cập nhật số lượng trong giỏ hàng" });
+            }
+            else
+            {
+                // Nếu không có, thêm sản phẩm mới vào giỏ hàng
+                var cartItem = new ShoppingCart
+                {
+                    UserId = userId,
+                    ProductId = productId,
+                    Quantity = quantity,
+                    Size = size
+                };
+
+                db.ShoppingCarts.InsertOnSubmit(cartItem);
+                db.SubmitChanges();
+
+                return Json(new { success = true, message = "Đã thêm sản phẩm vào giỏ hàng" });
+            }
         }
     }
 }

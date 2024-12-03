@@ -1,6 +1,51 @@
 ﻿/* CSS cho phần giao diện sản phẩm */
+.quantity_control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity_button {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #bf0000;
+    background-color: #FFF5E1;
+    border: 1px solid #bf0000;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 40px;
+    text-align: center;
+}
+
+    .quantity_button:hover {
+        background-color: #bf0000;
+        color: #FFFFFF;
+        border-color: #bf0000;
+    }
+
+    .quantity_button:disabled {
+        background-color: #f0f0f0;
+        color: #ddd;
+        border-color: #ddd;
+        cursor: not-allowed;
+    }
+
+#productQuantity {
+    width: 60px;
+    text-align: center;
+    font-size: 18px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0;
+}
+
 #productinfor {
     margin-top: 20px;
+    width: 100%;
 }
 
 .product_info_r .product_wrap_r {
@@ -79,6 +124,7 @@
         font-size: 16px;
         margin: 10px 0;
     }
+
 #productinfor {
     display: flex;
     padding: 20px;
@@ -158,10 +204,13 @@
     width: 100%;
     cursor: pointer;
 }
+
 .product_buttons {
     display: flex;
     gap: 10px;
 }
+
 .order_button:hover {
     opacity: 0.8;
 }
+/* CSS cho phần giao diện sản phẩm */

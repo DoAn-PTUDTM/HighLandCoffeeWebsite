@@ -1,61 +1,142 @@
-﻿@model HighLandCoffeeWebsite.Models.User
-@{
+﻿@{
     ViewBag.Title = "Thông tin khách hàng";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
+
 <link rel="stylesheet" href="~/Content/UserInfo.css" />
+
 <div class="customer-info-page">
-    <div class="container user-info-container">
-        <h2 class="title">Thông tin khách hàng</h2>
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar trái -->
+            <div class="col-md-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="account-info" href="javascript:void(0)">Thông tin tài khoản</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="order-history" href="javascript:void(0)">Lịch sử mua hàng</a>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="customer-info">
-            <div class="info-item">
-                <span class="info-label">Tên đăng nhập:</span>
-                <span class="info-value">@Model.userName</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Mật khẩu:</span>
-                <span class="info-value">@Model.password</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Tên khách hàng:</span>
-                <span class="info-value">@Model.CustomerName</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Email:</span>
-                <span class="info-value">@Model.Email</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Số điện thoại:</span>
-                <span class="info-value">@Model.PhoneNumber</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Địa chỉ:</span>
-                <span class="info-value">@Model.Address</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Vai trò:</span>
-                <span class="info-value">@((Model.Admin == 1) ? "Quản trị viên" : "Khách hàng")</span>
-            </div>
-        </div>
+            <!-- Nội dung bên phải -->
+            <div class="col-md-9">
+                <div id="account-info-section">
+                    <!-- Thông tin tài khoản -->
+                    <h2>Thông tin tài khoản</h2>
+                    <form id="update-user-form" method="post" action="@Url.Action("UpdateUserInfo", "Account")">
+                        <div class="customer-info">
+                            <input type="hidden" name="UserName" value="@Model.UserName" />
+                            <div class="info-item">
+                                <label class="info-label">Tên khách hàng:</label>
+                                <input type="text" class="info-value" name="FullName" value="@Model.FullName" readonly />
+                            </div>
+                            <div class="info-item">
+                                <label class="info-label">Email:</label>
+                                <input type="email" class="info-value" name="Email" value="@Model.Email" readonly />
+                            </div>
+                            <div class="info-item">
+                                <label class="info-label">Số điện thoại:</label>
+                                <input type="text" class="info-value" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
+                            </div>
+                            <div class="info-item">
+                                <label class="info-label">Địa chỉ:</label>
+                                <textarea class="info-value" name="Address" readonly>@Model.Address</textarea>
+                            </div>
+                        </div>
 
-        <div class="actions">
-            <a href="@Url.Action("EditUserInfo", "Account", new { id = Model.userName })" class="btn btn-primary edit-button">Chỉnh sửa thông tin</a>
+                        <div class="actions">
+                            <button type="button" id="edit-button" class="btn btn-secondary">Chỉnh sửa</button>
+                            <button type="submit" id="save-button" class="btn btn-primary" style="display: none;">Lưu thông tin</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="order-history-section" style="display:none;">
+                    <!-- Lịch sử mua hàng -->
+                    <h2>Lịch sử mua hàng</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Ngày đặt</th>
+                                <th>Tổng tiền</th>
+                                <th>Địa chỉ</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-history-list">
+                            <!-- Dữ liệu sẽ được load tại đây -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const editButton = document.querySelector(".edit-button");
+        const accountInfoButton = document.getElementById("account-info");
+        const orderHistoryButton = document.getElementById("order-history");
+        const accountInfoSection = document.getElementById("account-info-section");
+        const orderHistorySection = document.getElementById("order-history-section");
 
-        editButton.addEventListener("mouseenter", function () {
-            editButton.style.transform = "scale(1.05)";
-            editButton.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.2)";
+        // Bật mục Thông tin tài khoản
+        accountInfoButton.addEventListener("click", function () {
+            accountInfoSection.style.display = "block";
+            orderHistorySection.style.display = "none";
+            accountInfoButton.classList.add("active");
+            orderHistoryButton.classList.remove("active");
         });
 
-        editButton.addEventListener("mouseleave", function () {
-            editButton.style.transform = "scale(1)";
-            editButton.style.boxShadow = "none";
+        // Bật mục Lịch sử mua hàng
+        orderHistoryButton.addEventListener("click", function () {
+            accountInfoSection.style.display = "none";
+            orderHistorySection.style.display = "block";
+            accountInfoButton.classList.remove("active");
+            orderHistoryButton.classList.add("active");
+
+            // Load lịch sử mua hàng
+            loadOrderHistory();
         });
+
+        // Mặc định hiển thị thông tin tài khoản khi trang được tải
+        accountInfoButton.click();
+    });
+
+    // Hàm load lịch sử mua hàng
+    function loadOrderHistory() {
+        fetch("/Account/GetOrderHistory")
+            .then(response => response.json())
+            .then(data => {
+                const orderHistoryList = document.getElementById("order-history-list");
+                orderHistoryList.innerHTML = ""; // Clear the existing list
+
+                data.forEach(order => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${order.OrderId}</td>
+                        <td>${order.OrderDate}</td>
+                        <td>${order.TotalAmount}</td>
+                        <td>${order.Address}</td>
+                        <td><a href="/Account/OrderDetails/${order.OrderId}">Chi tiết</a></td>
+                    `;
+                    orderHistoryList.appendChild(row);
+                });
+            })
+            .catch(error => console.error("Có lỗi xảy ra:", error));
+    }
+
+    // Bật chế độ chỉnh sửa
+    document.getElementById("edit-button").addEventListener("click", function () {
+        const formInputs = document.querySelectorAll(".info-value");
+        formInputs.forEach(input => {
+            input.removeAttribute("readonly");
+            input.style.border = "1px solid #ccc"; // Thêm viền cho trường nhập
+        });
+        document.getElementById("edit-button").style.display = "none";
+        document.getElementById("save-button").style.display = "inline-block";
     });
 </script>
