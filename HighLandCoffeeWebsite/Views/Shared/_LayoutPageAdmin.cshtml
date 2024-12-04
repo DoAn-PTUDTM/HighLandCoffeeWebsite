@@ -8,6 +8,8 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/AdminLayout.css" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="@Url.Content("~/Content/AdminIndex.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/AdminProduct.css")" />
 
 
 </head>
@@ -27,7 +29,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="@Url.Action("ViewProduct", "Admin")">
                         <span class="icon"><i class='bx bx-food-menu'></i></span>
                         <span class="title">Products</span>
                     </a>
