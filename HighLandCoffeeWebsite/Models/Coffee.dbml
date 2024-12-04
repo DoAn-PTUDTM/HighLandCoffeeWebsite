@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HIGHLANDCOFFEE" Class="CoffeeDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=LTHPLINHCHI;Initial Catalog=HIGHLANDCOFFEE;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="HIGHLANDCOFFEEConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Categories" Member="Categories">
     <Type Name="Category">
       <Column Name="CategoryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -31,6 +30,17 @@
       <Association Name="Product_OrderItem" Member="Product" ThisKey="ProductId" OtherKey="ProductId" Type="Product" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ShoppingCart" Member="ShoppingCarts">
+    <Type Name="ShoppingCart">
+      <Column Name="CartId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
+      <Association Name="Product_ShoppingCart" Member="Product" ThisKey="ProductId" OtherKey="ProductId" Type="Product" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_ShoppingCart" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Orders" Member="Orders">
     <Type Name="Order">
       <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -56,17 +66,6 @@
       <Association Name="Category_Product" Member="Category" ThisKey="CategoryId" OtherKey="CategoryId" Type="Category" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.ShoppingCart" Member="ShoppingCarts">
-    <Type Name="ShoppingCart">
-      <Column Name="CartId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Size" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Association Name="Product_ShoppingCart" Member="Product" ThisKey="ProductId" OtherKey="ProductId" Type="Product" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-      <Association Name="User_ShoppingCart" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Stores" Member="Stores">
     <Type Name="Store">
       <Column Name="StoreId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -90,8 +89,8 @@
       <Column Name="Address" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="User_New" Member="News" ThisKey="UserId" OtherKey="PostedBy" Type="New" />
-      <Association Name="User_Order" Member="Orders" ThisKey="UserId" OtherKey="UserId" Type="Order" />
       <Association Name="User_ShoppingCart" Member="ShoppingCarts" ThisKey="UserId" OtherKey="UserId" Type="ShoppingCart" />
+      <Association Name="User_Order" Member="Orders" ThisKey="UserId" OtherKey="UserId" Type="Order" />
     </Type>
   </Table>
 </Database>
