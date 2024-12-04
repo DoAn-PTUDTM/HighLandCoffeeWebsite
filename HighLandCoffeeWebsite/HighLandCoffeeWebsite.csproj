@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HighLandCoffeeWebsite</RootNamespace>
     <AssemblyName>HighLandCoffeeWebsite</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44376</IISExpressSSLPort>
@@ -55,9 +55,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminProduct.css" />
     <Content Include="Content\AdminLayout.css" />
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -146,8 +147,33 @@
     <Content Include="Content\img\img-2.png" />
     <Content Include="Content\img\img-3.png" />
     <Content Include="Content\img\img-4.png" />
+    <Content Include="Content\img\logoLeft.png" />
+    <Content Include="img\imgProduct\=CARAMEL_MACCHIATTO.jpg" />
+    <Content Include="img\imgProduct\AMERICANO_NONG.jpg" />
+    <Content Include="img\imgProduct\BAC_XIU.jpg" />
+    <Content Include="img\imgProduct\CAPPUCINO.jpg" />
+    <Content Include="img\imgProduct\CARAMEL_FREEZE_PHINDI.jpg" />
+    <Content Include="img\imgProduct\CARAMEL_MACCHIATTO.jpg" />
+    <Content Include="img\imgProduct\CLASSIC_FREEZE_PHINDI.jpg" />
+    <Content Include="img\imgProduct\COOKIES_FREEZE.jpg" />
+    <Content Include="img\imgProduct\FREEZE_CHOCO.jpg" />
+    <Content Include="img\imgProduct\FREEZE_TRA_XANH.jpg" />
+    <Content Include="img\imgProduct\LATTE_1.jpg" />
+    <Content Include="img\imgProduct\MOCHA.jpg" />
+    <Content Include="img\imgProduct\Phindi_Cassia_Highlands_products_Image1.jpg" />
+    <Content Include="img\imgProduct\PHINDI_CHOCO.jpg" />
+    <Content Include="img\imgProduct\PHINDI_HANH_NHAN.jpg" />
+    <Content Include="img\imgProduct\PHINDI_KEM_SUA.jpg" />
+    <Content Include="img\imgProduct\Products__TSV.jpg" />
+    <Content Include="img\imgProduct\SANH_DIEU2.jpg" />
+    <Content Include="img\imgProduct\Tra_Oi_Hong.jpg" />
+    <Content Include="img\imgProduct\Tra_Qua_Mong_Anh_Dao.jpg" />
+    <Content Include="img\imgProduct\TRA_SEN_VANG_CU_NANG.jpg" />
+    <Content Include="img\imgProduct\TRA_TACH_VAI.jpg" />
+    <Content Include="img\imgProduct\TRA_THANH_DAO-08.jpg" />
+    <Content Include="img\imgProduct\TRA_THANH_DAO-09.jpg" />
+    <Content Include="img\imgProduct\TRA_XANH_DAU_DO.jpg" />
     <Content Include="Content\img\LATTE_1.jpg" />
-    <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\MOCHA.jpg" />
     <Content Include="Content\img\PhinDi_Cassia.jpg" />
     <Content Include="Content\img\Phindi_Cassia_Highlands_products_Image1.jpg" />
@@ -203,16 +229,20 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Admin_Product.cs" />
     <Compile Include="Models\Coffee.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Coffee.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\User_Admin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AdminService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -241,9 +271,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPageAdmin.cshtml" />
     <Content Include="Views\Cart\ViewCart.cshtml" />
-    <Content Include="Views\Product\ProductPartialView.cshtml" />
     <Content Include="Views\Product\ViewProduct.cshtml" />
     <Content Include="Views\Blog\ViewBlog.cshtml" />
+    <Content Include="Views\Admin\ViewProduct.cshtml" />
+    <Content Include="Views\Admin\AddProduct.cshtml" />
+    <Content Include="Views\Admin\UpdateProduct.cshtml" />
+    <Content Include="Views\Admin\ResetPassword.cshtml" />
     <Content Include="Views\Product\ProductDetails.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -251,6 +284,8 @@
     <Content Include="Views\Admin\Customer.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Cart\CheckOut.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

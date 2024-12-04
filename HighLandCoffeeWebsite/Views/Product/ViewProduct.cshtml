@@ -1,9 +1,49 @@
-﻿
+﻿@model List<HighLandCoffeeWebsite.Models.Product>
+
 @{
     ViewBag.Title = "ViewProduct";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-@Html.Partial("ProductPartialView")
+
+<link rel="stylesheet" href="~/Content/cssFormat.css" />
+<!-- Fruits Shop Start-->
+<div class="container-fluid fruite py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Drinks</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+
+                <div class="col-lg-8">
+                    <div class="row g-4 justify-content-center">
+                        @foreach (var item in Model)
+                        {
+
+                           <div class="col-md-6 col-lg-6 col-xl-4">
+                               <div class="rounded position-relative fruite-item">
+                                   <div class="fruite-img">
+                                       <img src="@Url.Content("~/img/imgProduct/"+item.ImageUrl)" class="img-fluid w-100 rounded-top" alt="">
+                                   </div>
+                                   <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.Name</div>
+                                   <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                       <h4>@item.Category.Name</h4>
+                                       <p>@item.Description</p>
+                                       <div class="d-flex justify-content-between flex-lg-wrap">
+                                           <p class="text-dark fs-5 fw-bold mb-0"> @item.Price /ly</p>
+                                           <a href="@Url.Action("ProductDetails", "Product", new {@id = item.ProductId})" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="me-2 text-primary"></i> Xem chi tiết</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                            
+                        }
 
 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

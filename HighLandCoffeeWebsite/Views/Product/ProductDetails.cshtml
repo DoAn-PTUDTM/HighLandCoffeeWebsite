@@ -13,33 +13,40 @@
                     <div class="product-image">
                         <img src="@Url.Content("~/Content/img/" + Model.ImageUrl)" alt="@Model.Name" />
                     </div>
+                    <form method="post" action="~/Cart/AddCart">
+                        <div class="product_info_r">
+                            <input type="hidden" name="prodID" value="@Model.ProductId" />
+                            <p class="info_product_title">@Model.Name</p>
+                            <div class="info_product_price">@String.Format("{0:0,0} ₫", Model.Price)</div>
+                            <div class="option_sizes">
+                                <p class="option_title">Chọn size</p>
+                                <div class="product_options" data-group="size">
+                                    <input type="radio" name="size" value="S" id="size_S" class="option_button" />
+                                    <label for="size_S">S</label>
 
-                    <div class="product_info_r">
-                        <p class="info_product_title">@Model.Name</p>
-                        <div class="info_product_price">@String.Format("{0:0,0} ₫", Model.Price)</div>
+                                    <input type="radio" name="size" value="M" id="size_M" class="option_button" />
+                                    <label for="size_M">M</label>
 
-                        <div class="option_sizes">
-                            <p class="option_title">Chọn size</p>
-                            <div class="product_options" data-group="size">
-                                <div class="option_button" onclick="selectOption(this, 'size', 'S', 0)">S</div>
-                                <div class="option_button" onclick="selectOption(this, 'size', 'M', 0)">M</div>
-                                <div class="option_button" onclick="selectOption(this, 'size', 'L', 0)">L</div>
+                                    <input type="radio" name="size" value="L" id="size_L" class="option_button" />
+                                    <label for="size_L">L</label>
+                                </div>
+                            </div>
+
+                            <div class="product_quantity">
+                                <p class="option_title">Số lượng</p>
+                                <div class="quantity_control">
+                                    <button class="quantity_button" onclick="changeQuantity(-1)">-</button>
+                                    <input type="number" name="num" id="productQuantity" value="1" min="1" />
+                                    <button class="quantity_button" onclick="changeQuantity(1)">+</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="product_buttons">
+                                <button class="order_button" type="submit">Thêm vào giỏ hàng</button>
+                                <button class="order_button" type="submit">Mua ngay</button>
                             </div>
                         </div>
-                        <div class="product_quantity">
-                            <p class="option_title">Số lượng</p>
-                            <div class="quantity_control">
-                                <button class="quantity_button" onclick="changeQuantity(-1)">-</button>
-                                <input type="number" id="productQuantity" value="1" min="1" />
-                                <button class="quantity_button" onclick="changeQuantity(1)">+</button>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="product_buttons">
-                            <button class="order_button" onclick="addToCart(@Model.ProductId)">Thêm vào giỏ hàng</button>
-                            <button class="order_button" onclick="buyNow(@Model.ProductId)">Mua ngay</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -96,7 +103,7 @@
     }
 
 
-    function addToCart(productId) {
+    @*function addToCart(productId) {
         const quantity = parseInt(document.getElementById("productQuantity").value) || 1;
 
         $.ajax({
@@ -126,5 +133,5 @@
         addToCart(productId);
 
         window.location.href = '@Url.Action("ViewCart", "Cart")';
-    }
+    }*@
 </script>
