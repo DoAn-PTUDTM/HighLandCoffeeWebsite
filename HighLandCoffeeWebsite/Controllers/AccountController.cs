@@ -156,7 +156,6 @@ namespace HighLandCoffeeWebsite.Controllers
         [HttpGet]
         public JsonResult GetOrderHistory()
         {
-            // Lấy danh sách đơn hàng của người dùng từ cơ sở dữ liệu
             var userId = (Session["User"] as User)?.UserId;
             if (userId == null)
             {
@@ -170,7 +169,14 @@ namespace HighLandCoffeeWebsite.Controllers
                                o.OrderId,
                                o.OrderDate,
                                o.TotalAmount,
-                               o.Address
+                               o.Address,
+                               Items = o.OrderItems.Select(d => new
+                               {
+                                   d.Product.Name,
+                                   d.Product.ImageUrl,
+                                   d.Quantity,
+                                   d.Price
+                               })
                            })
                            .ToList();
 

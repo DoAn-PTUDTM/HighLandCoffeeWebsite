@@ -3,8 +3,8 @@
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-<link rel="stylesheet" href="~/Content/UserInfo.css" />
-
+<link rel="stylesheet" href="~/Content/User_info.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 <div class="customer-info-page">
     <div class="container">
         <div class="row">
@@ -24,52 +24,63 @@
             <div class="col-md-9">
                 <div id="account-info-section">
                     <!-- Thông tin tài khoản -->
-                    <h2>Thông tin tài khoản</h2>
+                    <br />
+                    <h2 class="mb-4">Thông tin tài khoản</h2>
                     <form id="update-user-form" method="post" action="@Url.Action("UpdateUserInfo", "Account")">
-                        <div class="customer-info">
-                            <input type="hidden" name="UserName" value="@Model.UserName" />
-                            <div class="info-item">
-                                <label class="info-label">Tên khách hàng:</label>
-                                <input type="text" class="info-value" name="FullName" value="@Model.FullName" readonly />
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h4>Chỉnh sửa thông tin</h4>
                             </div>
-                            <div class="info-item">
-                                <label class="info-label">Email:</label>
-                                <input type="email" class="info-value" name="Email" value="@Model.Email" readonly />
-                            </div>
-                            <div class="info-item">
-                                <label class="info-label">Số điện thoại:</label>
-                                <input type="text" class="info-value" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
-                            </div>
-                            <div class="info-item">
-                                <label class="info-label">Địa chỉ:</label>
-                                <textarea class="info-value" name="Address" readonly>@Model.Address</textarea>
-                            </div>
-                        </div>
+                            <div class="card-body">
+                                <div class="customer-info">
+                                    <input type="hidden" name="UserName" value="@Model.UserName" />
+                                    <div class="mb-3">
+                                        <label for="UserName" class="form-label">Tên tài khoản:</label>
+                                        <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" readonly />
+                                    </div>
 
-                        <div class="actions">
-                            <button type="button" id="edit-button" class="btn btn-secondary">Chỉnh sửa</button>
-                            <button type="submit" id="save-button" class="btn btn-primary" style="display: none;">Lưu thông tin</button>
+                                    <div class="mb-3 position-relative">
+                                        <label for="Password" class="form-label">Mật khẩu:</label>
+                                        <input type="password" class="form-control" id="Password" name="Password" value="@Model.Password" readonly />
+                                        <i class="bi bi-eye-slash" id="toggle-password" style="position: absolute; right: 10px; top: 35px; cursor: pointer;"></i>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="FullName" class="form-label">Tên khách hàng:</label>
+                                        <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.FullName" readonly />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="Email" class="form-label">Email:</label>
+                                        <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" readonly />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="PhoneNumber" class="form-label">Số điện thoại:</label>
+                                        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="@Model.PhoneNumber" readonly />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="Address" class="form-label">Địa chỉ:</label>
+                                        <textarea class="form-control" id="Address" name="Address" readonly>@Model.Address</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions d-flex justify-content-center">
+                                    <button type="button" id="edit-button" class="btn btn-warning">Chỉnh sửa</button>
+                                    <button type="submit" id="save-button" class="btn btn-success" style="display: none;">Lưu thông tin</button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
 
                 <div id="order-history-section" style="display:none;">
                     <!-- Lịch sử mua hàng -->
-                    <h2>Lịch sử mua hàng</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Mã đơn hàng</th>
-                                <th>Ngày đặt</th>
-                                <th>Tổng tiền</th>
-                                <th>Địa chỉ</th>
-                                <th>Chi tiết</th>
-                            </tr>
-                        </thead>
-                        <tbody id="order-history-list">
-                            <!-- Dữ liệu sẽ được load tại đây -->
-                        </tbody>
-                    </table>
+                    <br />
+                    <h2 class="mb-4">Lịch sử mua hàng</h2>
+                    <div class="row" id="order-history-list">
+                        <!-- Các card đơn hàng sẽ được load ở đây -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,39 +115,88 @@
 
         // Mặc định hiển thị thông tin tài khoản khi trang được tải
         accountInfoButton.click();
+
+        // Hiển thị/ẩn mật khẩu
+        document.getElementById("toggle-password").addEventListener("click", function () {
+            const passwordField = document.getElementById("Password");
+            const passwordFieldType = passwordField.type;
+
+            if (passwordFieldType === "password") {
+                passwordField.type = "text";
+                this.classList.remove("bi-eye-slash");
+                this.classList.add("bi-eye");
+            } else {
+                passwordField.type = "password";
+                this.classList.remove("bi-eye");
+                this.classList.add("bi-eye-slash");
+            }
+        });
     });
 
-    // Hàm load lịch sử mua hàng
-    function loadOrderHistory() {
+    // Chuyển đổi ngày JSON
+    function parseJsonDate(jsonDate) {
+        const timestamp = parseInt(jsonDate.replace(/\/Date\((\d+)\)\//, "$1"));
+        const date = new Date(timestamp);
+        return date.toLocaleDateString("vi-VN");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const orderHistoryList = document.getElementById("order-history-list");
+
+        if (!orderHistoryList) {
+            console.error("Không tìm thấy phần tử order-history-list trong DOM.");
+            return;
+        }
+
         fetch("/Account/GetOrderHistory")
             .then(response => response.json())
             .then(data => {
-                const orderHistoryList = document.getElementById("order-history-list");
-                orderHistoryList.innerHTML = ""; // Clear the existing list
+                if (!data || !Array.isArray(data)) {
+                    orderHistoryList.innerHTML = "<p class='text-center'>Không có lịch sử mua hàng nào.</p>";
+                    return;
+                }
 
                 data.forEach(order => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${order.OrderId}</td>
-                        <td>${order.OrderDate}</td>
-                        <td>${order.TotalAmount}</td>
-                        <td>${order.Address}</td>
-                        <td><a href="/Account/OrderDetails/${order.OrderId}">Chi tiết</a></td>
+                    const items = Array.isArray(order.Items) ? order.Items : [];
+                    const orderDate = new Date(order.OrderDate).toLocaleDateString("vi-VN");
+                    const totalPrice = order.TotalAmount.toLocaleString("vi-VN");
+
+                    const card = document.createElement("div");
+                    card.className = "col-12 mb-4";
+
+                    card.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="${items[0].ImageUrl || ''}" alt="${items[0].Name || 'Sản phẩm'}" class="img-thumbnail me-3" style="width: 100px; height: 100px;">
+                                <div>
+                                    <h6>${items[0].Name || 'Sản phẩm'}</h6>
+                                    <p class="mb-0">Số lượng: ${items[0].Quantity || 0}</p>
+                                    <p class="mb-0">Đơn giá: ${(items[0].UnitPrice || 0).toLocaleString("vi-VN")} ₫</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="text-success mb-0">Tổng tiền: ${totalPrice} ₫</h5>
+                                <button class="btn btn-info" onclick="reorder(${order.OrderId})">Mua lại</button>
+                            </div>
+                        </div>
                     `;
-                    orderHistoryList.appendChild(row);
+
+                    orderHistoryList.appendChild(card);
                 });
             })
             .catch(error => console.error("Có lỗi xảy ra:", error));
-    }
-
-    // Bật chế độ chỉnh sửa
-    document.getElementById("edit-button").addEventListener("click", function () {
-        const formInputs = document.querySelectorAll(".info-value");
-        formInputs.forEach(input => {
-            input.removeAttribute("readonly");
-            input.style.border = "1px solid #ccc"; // Thêm viền cho trường nhập
-        });
-        document.getElementById("edit-button").style.display = "none";
-        document.getElementById("save-button").style.display = "inline-block";
     });
+
+    // Xử lý mua lại
+    function reorder(orderId) {
+        fetch(`/Cart/Reorder?orderId=${orderId}`, { method: "POST" })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "/Cart";
+                } else {
+                    alert("Có lỗi xảy ra khi mua lại đơn hàng!");
+                }
+            })
+            .catch(error => console.error("Có lỗi xảy ra:", error));
+    }
 </script>

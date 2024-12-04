@@ -11,13 +11,12 @@
             <div class="row">
                 <div id="productinfor">
                     <div class="product-image">
-                        <!-- Lấy đường dẫn ảnh từ Content/img -->
                         <img src="@Url.Content("~/Content/img/" + Model.ImageUrl)" alt="@Model.Name" />
                     </div>
 
                     <div class="product_info_r">
                         <p class="info_product_title">@Model.Name</p>
-                        <div class="info_product_price">@Model.Price.ToString("C")</div>
+                        <div class="info_product_price">@String.Format("{0:0,0} ₫", Model.Price)</div>
 
                         <div class="option_sizes">
                             <p class="option_title">Chọn size</p>
@@ -54,13 +53,12 @@
         <div class="related-products">
             @foreach (var relatedProduct in ViewBag.RelatedProducts as List<HighLandCoffeeWebsite.Models.Product>)
             {
-                <div class="product">
-                    <!-- Lấy đường dẫn ảnh từ Content/img -->
-                    <img src="@Url.Content("~/Content/img/" + relatedProduct.ImageUrl)" alt="@relatedProduct.Name" />
-                    <h4>@relatedProduct.Name</h4>
-                    <p>@relatedProduct.Price.ToString("C")</p>
-                    <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })">Xem chi tiết</a>
-                </div>
+            <div class="product">
+                <img src="@Url.Content("~/Content/img/" + relatedProduct.ImageUrl)" alt="@relatedProduct.Name" />
+                <h4>@relatedProduct.Name</h4>
+                <p>@String.Format("{0:0,0} ₫", relatedProduct.Price)</p>
+                <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })">Xem chi tiết</a>
+            </div>
             }
         </div>
     </div>

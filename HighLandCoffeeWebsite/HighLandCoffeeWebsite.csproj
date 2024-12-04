@@ -155,6 +155,7 @@
     <Content Include="Content\img\PHINDI_HANH_NHAN.jpg" />
     <Content Include="Content\img\PHINDI_KEM_SUA.jpg" />
     <Content Include="Content\img\Phin_Den_Da.jpg" />
+    <Content Include="Content\img\pngHighlands_Coffee_logo.png" />
     <Content Include="Content\img\SANH_DIEU2.jpg" />
     <Content Include="Content\img\Tac_Da_Vien.jpg" />
     <Content Include="Content\img\teligram-icon.png" />
@@ -178,7 +179,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\style.css" />
-    <Content Include="Content\User_in4.css" />
+    <Content Include="Content\User_info.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -249,6 +250,7 @@
     <Content Include="Views\Account\User_info.cshtml" />
     <Content Include="Views\Admin\Customer.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
