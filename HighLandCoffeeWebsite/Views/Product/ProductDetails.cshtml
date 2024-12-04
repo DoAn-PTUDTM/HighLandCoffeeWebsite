@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/detailspro.css" />
+
+<div id="productinfor">
+    <div class="product_info_r">
+        <div class="product_wrap_r container">
+            <div class="row">
+                <div id="productinfor">
+                    <div class="product-image">
+                        <!-- Lấy đường dẫn ảnh từ Content/img -->
+                        <img src="@Url.Content("~/Content/img/" + Model.ImageUrl)" alt="@Model.Name" />
+                    </div>
+
+                    <div class="product_info_r">
+                        <p class="info_product_title">@Model.Name</p>
+                        <div class="info_product_price">@Model.Price.ToString("C")</div>
+
+                        <div class="option_sizes">
+                            <p class="option_title">Chọn size</p>
+                            <div class="product_options" data-group="size">
+                                <div class="option_button" onclick="selectOption(this, 'size', 'S', 0)">S</div>
+                                <div class="option_button" onclick="selectOption(this, 'size', 'M', 0)">M</div>
+                                <div class="option_button" onclick="selectOption(this, 'size', 'L', 0)">L</div>
+                            </div>
+                        </div>
+                        <div class="product_quantity">
+                            <p class="option_title">Số lượng</p>
+                            <div class="quantity_control">
+                                <button class="quantity_button" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" id="productQuantity" value="1" min="1" />
+                                <button class="quantity_button" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="product_buttons">
+                            <button class="order_button" onclick="addToCart(@Model.ProductId)">Thêm vào giỏ hàng</button>
+                            <button class="order_button" onclick="buyNow(@Model.ProductId)">Mua ngay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div>
+            <strong>Mô tả sản phẩm</strong><br />
+            @Model.Description
+        </div>
+        <hr />
+        <strong>Sản phẩm liên quan</strong><br />
+        <div class="related-products">
+            @foreach (var relatedProduct in ViewBag.RelatedProducts as List<HighLandCoffeeWebsite.Models.Product>)
+            {
+                <div class="product">
+                    <!-- Lấy đường dẫn ảnh từ Content/img -->
+                    <img src="@Url.Content("~/Content/img/" + relatedProduct.ImageUrl)" alt="@relatedProduct.Name" />
+                    <h4>@relatedProduct.Name</h4>
+                    <p>@relatedProduct.Price.ToString("C")</p>
+                    <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })">Xem chi tiết</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedSize = 'Nhỏ';  // Giá trị mặc định
+    let additionalPrice = 0;  // Giá trị thêm vào (đơn vị VND)
+
+    function selectOption(element, group, size, price) {
+        // Xóa lớp 'selected' khỏi tất cả các option
+        const options = document.querySelectorAll(`.product_options[data-group="${group}"] .option_button`);
+        options.forEach(option => option.classList.remove('selected'));
+
+        // Thêm lớp 'selected' vào option đã chọn
+        element.classList.add('selected');
+
+        // Cập nhật giá trị size và giá trị thêm vào
+        selectedSize = size;
+        additionalPrice = price;
+    }
+    function changeQuantity(amount) {
+        const input = document.getElementById("productQuantity");
+        let current = parseInt(input.value) || 1;
+        const newValue = Math.max(1, current + amount);
+        input.value = newValue;
+
+        // Cập nhật trạng thái nút giảm nếu số lượng bằng 1
+        const decreaseButton = document.getElementById("decreaseButton");
+        if (newValue <= 1) {
+            decreaseButton.disabled = true;
+        } else {
+            decreaseButton.disabled = false;
+        }
+    }
+
+
+    function addToCart(productId) {
+        const quantity = parseInt(document.getElementById("productQuantity").value) || 1;
+
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Product")',
+            type: 'POST',
+            data: {
+                productId: productId,
+                quantity: quantity,
+                size: selectedSize,  // Gửi giá trị size đã chọn
+                additionalPrice: additionalPrice  // Gửi giá trị thêm vào
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng");
+            }
+        });
+    }
+
+    function buyNow(productId) {
+        const quantity = parseInt(document.getElementById("productQuantity").value) || 1;
+        addToCart(productId);
+
+        window.location.href = '@Url.Action("ViewCart", "Cart")';
+    }
+</script>

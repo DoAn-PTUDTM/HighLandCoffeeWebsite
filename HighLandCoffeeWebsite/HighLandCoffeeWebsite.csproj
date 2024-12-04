@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -23,6 +24,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -51,16 +55,14 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -101,20 +103,39 @@
     <Content Include="Content\bootstrap.min2.css" />
     <Content Include="Content\cssFormat.css" />
     <Content Include="Content\default-skin.css" />
+    <Content Include="Content\detailspro.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\icomoon.css" />
     <Content Include="Content\img\about-img.png" />
+    <Content Include="Content\img\AMERICANO_NONG.jpg" />
+    <Content Include="Content\img\BAC_XIU.jpg" />
     <Content Include="Content\img\banner-bg.png" />
     <Content Include="Content\img\banner-img.png" />
     <Content Include="Content\img\blog-img1.png" />
     <Content Include="Content\img\blog-img2.png" />
+    <Content Include="Content\img\BMQ_Ga_Pho_Mai.png" />
+    <Content Include="Content\img\BMQ_Pate.png" />
     <Content Include="Content\img\bulit-icon.png" />
+    <Content Include="Content\img\CAPPUCINO.jpg" />
+    <Content Include="Content\img\CARAMEL_FREEZE_PHINDI.jpg" />
+    <Content Include="Content\img\CARAMEL_MACCHIATTO.jpg" />
+    <Content Include="Content\img\Chanh_Da_Vien.jpg" />
+    <Content Include="Content\img\Chanh_Da_Xay.jpg" />
+    <Content Include="Content\img\Citrus_Cafe_De_Tonic.jpg" />
+    <Content Include="Content\img\CLASSIC_FREEZE_PHINDI.jpg" />
     <Content Include="Content\img\client-bg.png" />
     <Content Include="Content\img\client-img1.png" />
     <Content Include="Content\img\client-img2.png" />
     <Content Include="Content\img\client-img3.png" />
+    <Content Include="Content\img\Cold_Brew.jpg" />
+    <Content Include="Content\img\Cold_Brew_Milk_Foam.jpg" />
+    <Content Include="Content\img\Cold_Brew_Peach.jpg" />
+    <Content Include="Content\img\COOKIES_FREEZE.jpg" />
     <Content Include="Content\img\customer-img.png" />
+    <Content Include="Content\img\EXPRESSO.jpg" />
     <Content Include="Content\img\footer-bg.png" />
+    <Content Include="Content\img\FREEZE_CHOCO.jpg" />
+    <Content Include="Content\img\FREEZE_TRA_XANH.jpg" />
     <Content Include="Content\img\header-bg.png" />
     <Content Include="Content\img\icon-4.png" />
     <Content Include="Content\img\icon-5.png" />
@@ -126,6 +147,7 @@
     <Content Include="Content\img\img-2.png" />
     <Content Include="Content\img\img-3.png" />
     <Content Include="Content\img\img-4.png" />
+    <Content Include="Content\img\logoLeft.png" />
     <Content Include="img\imgProduct\=CARAMEL_MACCHIATTO.jpg" />
     <Content Include="img\imgProduct\AMERICANO_NONG.jpg" />
     <Content Include="img\imgProduct\BAC_XIU.jpg" />
@@ -151,8 +173,26 @@
     <Content Include="img\imgProduct\TRA_THANH_DAO-08.jpg" />
     <Content Include="img\imgProduct\TRA_THANH_DAO-09.jpg" />
     <Content Include="img\imgProduct\TRA_XANH_DAU_DO.jpg" />
-    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\LATTE_1.jpg" />
+    <Content Include="Content\img\MOCHA.jpg" />
+    <Content Include="Content\img\PhinDi_Cassia.jpg" />
+    <Content Include="Content\img\Phindi_Cassia_Highlands_products_Image1.jpg" />
+    <Content Include="Content\img\PHINDI_CHOCO.jpg" />
+    <Content Include="Content\img\PHINDI_HANH_NHAN.jpg" />
+    <Content Include="Content\img\PHINDI_KEM_SUA.jpg" />
+    <Content Include="Content\img\Phin_Den_Da.jpg" />
+    <Content Include="Content\img\SANH_DIEU2.jpg" />
+    <Content Include="Content\img\Tac_Da_Vien.jpg" />
     <Content Include="Content\img\teligram-icon.png" />
+    <Content Include="Content\img\Tra_Oi_Hong.jpg" />
+    <Content Include="Content\img\Tra_Qua_Mong_Anh_Dao.jpg" />
+    <Content Include="Content\img\TRA_SEN_VANG_CU_NANG.jpg" />
+    <Content Include="Content\img\TRA_THACH_DAO-09.jpg" />
+    <Content Include="Content\img\TRA_THACH_VAI.jpg" />
+    <Content Include="Content\img\TRA_THANH_DAO-08.jpg" />
+    <Content Include="Content\img\TRA_XANH_DAU_DO.jpg" />
+    <Content Include="Content\img\TSV.jpg" />
+    <Content Include="Content\index.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.fancybox.min.css" />
     <Content Include="Content\jquery.mCustomScrollbar.min.css" />
@@ -164,6 +204,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\User_in4.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -182,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -226,7 +268,6 @@
     <Content Include="Views\Shared\_LayoutPage.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPageAdmin.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Cart\ViewCart.cshtml" />
     <Content Include="Views\Product\ViewProduct.cshtml" />
     <Content Include="Views\Blog\ViewBlog.cshtml" />
@@ -234,6 +275,12 @@
     <Content Include="Views\Admin\AddProduct.cshtml" />
     <Content Include="Views\Admin\UpdateProduct.cshtml" />
     <Content Include="Views\Admin\ResetPassword.cshtml" />
+    <Content Include="Views\Product\ProductDetails.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\User_info.cshtml" />
+    <Content Include="Views\Admin\Customer.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -246,12 +293,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>

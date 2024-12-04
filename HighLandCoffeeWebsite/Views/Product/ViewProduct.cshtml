@@ -30,7 +30,7 @@
                                         <p>@item.Description</p>
                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                             <p class="text-dark fs-5 fw-bold mb-0"> @item.Price /ly</p>
-                                            <a href="@Url.Action("ViewCart", "Cart", new {@id = item.ProductId})" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                            <a href="@Url.Action("ProductDetails", "Product", new {@id = item.ProductId})" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="me-2 text-primary"></i> Xem chi tiết</a>
                                         </div>
                                     </div>
                                 </div>
@@ -57,4 +57,3 @@
     </div>
 </div>
 </div>
-<!-- Fruits Shop End-->

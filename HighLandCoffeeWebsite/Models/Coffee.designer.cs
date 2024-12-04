@@ -54,14 +54,15 @@ namespace HighLandCoffeeWebsite.Models
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
-        #endregion
-
-        public CoffeeDataContext() :
-                base(global::System.Configuration.ConfigurationManager.ConnectionStrings["HIGHLANDCOFFEEConnectionString"].ConnectionString, mappingSource)
-        {
-            OnCreated();
-        }
-        public CoffeeDataContext(string connection) : 
+    #endregion
+		
+		public CoffeeDataContext() : 
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["HIGHLANDCOFFEEConnectionString"].ConnectionString, mappingSource)
+		{
+			OnCreated();
+		}
+		
+		public CoffeeDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
@@ -1319,6 +1320,8 @@ namespace HighLandCoffeeWebsite.Models
 		
 		private int _Quantity;
 		
+		private string _Size;
+		
 		private EntityRef<Product> _Product;
 		
 		private EntityRef<User> _User;
@@ -1335,6 +1338,8 @@ namespace HighLandCoffeeWebsite.Models
     partial void OnProductIdChanged();
     partial void OnQuantityChanging(int value);
     partial void OnQuantityChanged();
+    partial void OnSizeChanging(string value);
+    partial void OnSizeChanged();
     #endregion
 		
 		public ShoppingCart()
@@ -1428,6 +1433,26 @@ namespace HighLandCoffeeWebsite.Models
 					this._Quantity = value;
 					this.SendPropertyChanged("Quantity");
 					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Size", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		public string Size
+		{
+			get
+			{
+				return this._Size;
+			}
+			set
+			{
+				if ((this._Size != value))
+				{
+					this.OnSizeChanging(value);
+					this.SendPropertyChanging();
+					this._Size = value;
+					this.SendPropertyChanged("Size");
+					this.OnSizeChanged();
 				}
 			}
 		}
