@@ -55,7 +55,6 @@ namespace HighLandCoffeeWebsite.Models
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
         #endregion
-
         public CoffeeDataContext() :
                 base(global::System.Configuration.ConfigurationManager.ConnectionStrings["HIGHLANDCOFFEEConnectionString"].ConnectionString, mappingSource)
         {
@@ -1033,6 +1032,8 @@ namespace HighLandCoffeeWebsite.Models
 		
 		private double _TotalAmount;
 		
+		private string _State;
+		
 		private EntitySet<OrderItem> _OrderItems;
 		
 		private EntityRef<User> _User;
@@ -1053,6 +1054,8 @@ namespace HighLandCoffeeWebsite.Models
     partial void OnPhoneChanged();
     partial void OnTotalAmountChanging(double value);
     partial void OnTotalAmountChanged();
+    partial void OnStateChanging(string value);
+    partial void OnStateChanged();
     #endregion
 		
 		public Order()
@@ -1182,6 +1185,26 @@ namespace HighLandCoffeeWebsite.Models
 					this._TotalAmount = value;
 					this.SendPropertyChanged("TotalAmount");
 					this.OnTotalAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_State", CanBeNull=false)]
+		public string State
+		{
+			get
+			{
+				return this._State;
+			}
+			set
+			{
+				if ((this._State != value))
+				{
+					this.OnStateChanging(value);
+					this.SendPropertyChanging();
+					this._State = value;
+					this.SendPropertyChanged("State");
+					this.OnStateChanged();
 				}
 			}
 		}

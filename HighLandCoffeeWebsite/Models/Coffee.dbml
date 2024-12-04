@@ -49,6 +49,7 @@
       <Column Name="Address" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="Phone" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
       <Column Name="TotalAmount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Member="State" Type="System.String" CanBeNull="false" />
       <Association Name="Order_OrderItem" Member="OrderItems" ThisKey="OrderId" OtherKey="OrderId" Type="OrderItem" />
       <Association Name="User_Order" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
