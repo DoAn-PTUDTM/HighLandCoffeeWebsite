@@ -45,8 +45,8 @@
                             </div>
                             <br />
                             <div class="product_buttons">
-                                <button class="order_button" onclick="addToCart(@Model.ProductId)" type="submit">Thêm vào giỏ hàng</button>
-                                <button class="order_button" onclick="buyNow(@Model.ProductId)" type="submit">Mua ngay</button>
+                                <button class="order_button" type="submit">Thêm vào giỏ hàng</button>
+                                <button class="order_button" type="submit">Mua ngay</button>
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@
     }
 
 
-    function addToCart(productId) {
+    @*function addToCart(productId) {
         const quantity = parseInt(document.getElementById("productQuantity").value) || 1;
 
         $.ajax({
@@ -139,5 +139,5 @@
         addToCart(productId);
 
         window.location.href = '@Url.Action("ViewCart", "Cart")';
-    }
+    }*@
 </script>
