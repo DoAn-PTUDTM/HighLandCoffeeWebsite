@@ -40,6 +40,25 @@
                         <span class="title">Người dùng</span>
                     </a>
                 </li>
+
+                @*<li>
+                    <a href="@Url.Action("ManageOrders", "Admin")">
+                        <span class="icon"><i class='bx bxs-cart'></i></i></i></span>
+                        <span class="title">Đơn hàng</span>
+                    </a>
+                </li>*@
+                @*<li>
+                    <a href="">
+                        <span class="icon"><i class='bx bx-cog'></i></span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <span class="icon"><i class='bx bx-lock-alt'></i></span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>*@
                 <li>
                     <a href="@Url.Action("Signout", "Admin")">
                         <span class="icon"><i class='bx bx-log-out'></i></span>
@@ -49,6 +68,22 @@
             </ul>
         </div> 
     <div class="main">
+            @*<div class="top-nav">
+                <div class="searchAdmin">
+                    <label>
+                        <input type="text" placeholder="Search here" />
+                        <div class="icon-card"><i class='bx bx-search-alt-2'></i></div>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <a href="">
+                        <img src="~/Content/img/2.jpg" />
+                    </a>
+                </div>
+            </div>*@
+
+
             <div>
                 @RenderBody()
             </div>

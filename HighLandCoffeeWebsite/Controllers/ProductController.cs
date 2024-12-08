@@ -45,11 +45,13 @@ namespace HighLandCoffeeWebsite.Controllers
             {
                 return Json(new { success = false, message = "Sản phẩm không tồn tại" });
             }
+
             var user = Session["User"] as User; // Lấy thông tin người dùng từ Session
             if (user == null)
             {
                 return Json(new { success = false, message = "Bạn cần đăng nhập trước khi thêm sản phẩm vào giỏ hàng" });
             }
+
             var userId = user.UserId;
 
             // Kiểm tra sản phẩm với cùng size đã tồn tại trong giỏ hàng chưa
@@ -74,6 +76,7 @@ namespace HighLandCoffeeWebsite.Controllers
 
                 db.ShoppingCarts.InsertOnSubmit(cartItem);
                 db.SubmitChanges();
+
                 return RedirectToAction("ViewCart", "Cart");
 
             }
@@ -90,5 +93,6 @@ namespace HighLandCoffeeWebsite.Controllers
 
             return View("ViewProduct", results);
         }
+
     }
 }

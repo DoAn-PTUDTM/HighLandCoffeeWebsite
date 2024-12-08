@@ -6,7 +6,6 @@ using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using HighLandCoffeeWebsite.Models;
 
 namespace HighLandCoffeeWebsite.Controllers
 {
@@ -14,6 +13,7 @@ namespace HighLandCoffeeWebsite.Controllers
     {
         AdminService adminService = new AdminService();
         // GET: AdminHome
+
         private CoffeeDataContext db = new CoffeeDataContext();
         // GET: AdminHome]
         public ActionResult Customer(string searchTerm, string sortOrder, int page = 1, int pageSize = 5)
