@@ -13,15 +13,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-<!-- Libraries Stylesheet -->
-<link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-
-<!-- Customized Bootstrap Stylesheet -->
-<link rel="stylesheet" href="~/Content/bootstrap.min2.css" />
-<link rel="stylesheet" href="~/Content/cssFormat.css" />
-
 <!-- Cart Page Start -->
 <div class="container py-5">
     <div class="table-responsive">
@@ -35,16 +26,28 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Products</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Xóa</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            // Tính giá theo size
+                            double price = (double)item.Product.Price;
+                            if (item.Size == "M")
+                            {
+                                price += 10000; // Ví dụ giá thêm cho size M
+                            }
+                            else if (item.Size == "L")
+                            {
+                                price += 20000; // Ví dụ giá thêm cho size L
+                            }
+
                             <tr>
                                 <th scope="row">
                                     <div class="d-flex align-items-center">
@@ -55,33 +58,30 @@
                                     <p class="mb-0 mt-4">@item.Product.Name</p>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4">@item.Product.Price</p>
+                                    <p class="mb-0 mt-4">@String.Format("{0:0,0} ₫", price)</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">@item.Size</p>
                                 </td>
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value=" @Html.DisplayFor(modelItem => item.Quantity)">
+                                        <input type="text" class="form-control form-control-sm text-center border-0" value="@Html.DisplayFor(modelItem => item.Quantity)">
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Deleted", "Cart", new {@prodID = item.ProductId} )" class="btn btn-md rounded-circle bg-light border mt-4">
+                                    <a href="@Url.Action("Deleted", "Cart", new { @prodID = item.ProductId })" class="btn btn-md rounded-circle bg-light border mt-4">
                                         <i class="fa fa-times text-danger"></i>
                                     </a>
                                 </td>
-
                             </tr>
                         }
                     </tbody>
-
                 </table>
                 <div class="d-grid gap-2 col-6 mx-auto p-3">
-                    <a href="@Url.Action("CheckOut", "Cart")" class="btn btn-danger justify-content-lg-between" type="submit">CHECK OUT</a>
-
+                    <a href="@Url.Action("CheckOut", "Cart")" class="btn btn-danger justify-content-lg-between" type="submit">THANH TOÁN</a>
                 </div>
-
             </form>
         }
     </div>
-    <!-- Cart Page End -->
-
-   
-
+</div>
+<!-- Cart Page End -->

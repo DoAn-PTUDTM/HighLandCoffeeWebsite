@@ -6,48 +6,56 @@
 <link rel="stylesheet" href="~/Content/detailspro.css" />
 
 <div id="productinfor">
-    <div class="product_info_r">
-        <div class="product_wrap_r container">
-            <div class="row">
-                <div id="productinfor">
-                    <div class="product-image">
-                        <img src="@Url.Content("~/Content/img/" + Model.ImageUrl)" alt="@Model.Name" />
-                    </div>
-                    <form method="post" action="~/Cart/AddCart">
-                        <div class="product_info_r">
-                            <input type="hidden" name="prodID" value="@Model.ProductId" />
-                            <p class="info_product_title">@Model.Name</p>
-                            <div class="info_product_price">@String.Format("{0:0,0} ₫", Model.Price)</div>
-                            <div class="option_sizes">
-                                <p class="option_title">Chọn size</p>
-                                <div class="product_options" data-group="size">
-                                    <input type="radio" name="size" value="S" id="size_S" class="option_button" />
-                                    <label for="size_S">S</label>
+    <div class="product_wrap_r container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-image text-center">
+                    <img src="@Url.Content("~/Content/img/" + Model.ImageUrl)" alt="@Model.Name" style="width: 70%; height: 70%; object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form method="post" action="@Url.Action("AddToCart", "Product")" id="addToCartForm">
+                    <div class="product_info_r">
+                        <input type="hidden" name="prodID" value="@Model.ProductId" />
+                        <input type="hidden" name="price" value="@Model.Price" />
+                        <p class="info_product_title">@Model.Name</p>
+                        <div class="info_product_price" id="productPrice">
+                            @String.Format("{0:0,0} ₫", Model.Price)
+                        </div>
 
-                                    <input type="radio" name="size" value="M" id="size_M" class="option_button" />
-                                    <label for="size_M">M</label>
+                        <!-- Chọn size -->
+                        <div class="option_sizes">
+                            <p class="option_title">Chọn size</p>
+                            <div class="product_options" data-group="size">
+                                <input type="radio" name="size" value="S" id="size_S" class="option_button" data-price-modifier="0" />
+                                <label for="size_S">S</label>
 
-                                    <input type="radio" name="size" value="L" id="size_L" class="option_button" />
-                                    <label for="size_L">L</label>
-                                </div>
-                            </div>
+                                <input type="radio" name="size" value="M" id="size_M" class="option_button" data-price-modifier="10000" />
+                                <label for="size_M">M</label>
 
-                            <div class="product_quantity">
-                                <p class="option_title">Số lượng</p>
-                                <div class="quantity_control">
-                                    <button class="quantity_button" onclick="changeQuantity(-1)">-</button>
-                                    <input type="number" name="num" id="productQuantity" value="1" min="1" />
-                                    <button class="quantity_button" onclick="changeQuantity(1)">+</button>
-                                </div>
-                            </div>
-                            <br />
-                            <div class="product_buttons">
-                                <button class="order_button" type="submit">Thêm vào giỏ hàng</button>
-                                <button class="order_button" type="submit">Mua ngay</button>
+                                <input type="radio" name="size" value="L" id="size_L" class="option_button" data-price-modifier="20000" />
+                                <label for="size_L">L</label>
                             </div>
                         </div>
-                    </form>
-                </div>
+
+                        <!-- Chọn số lượng -->
+                        <div class="product_quantity">
+                            <p class="option_title">Số lượng</p>
+                            <div class="quantity_control">
+                                <button type="button" class="quantity_button" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" name="quantity" id="productQuantity" value="1" min="1" />
+                                <button type="button" class="quantity_button" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <!-- Nút Thêm vào giỏ hàng -->
+                        <div class="product_buttons">
+                            <button class="order_button" type="submit">Thêm vào giỏ hàng</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <hr />
@@ -60,78 +68,63 @@
         <div class="related-products">
             @foreach (var relatedProduct in ViewBag.RelatedProducts as List<HighLandCoffeeWebsite.Models.Product>)
             {
-            <div class="product">
-                <img src="@Url.Content("~/Content/img/" + relatedProduct.ImageUrl)" alt="@relatedProduct.Name" />
-                <h4>@relatedProduct.Name</h4>
-                <p>@String.Format("{0:0,0} ₫", relatedProduct.Price)</p>
-                <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })">Xem chi tiết</a>
-            </div>
+                <div class="product">
+                    <img src="@Url.Content("~/Content/img/" + relatedProduct.ImageUrl)" alt="@relatedProduct.Name" class="img-fluid" style="max-height: 200px; object-fit: cover;">
+                    <h4>@relatedProduct.Name</h4>
+                    <p>@String.Format("{0:0,0} ₫", relatedProduct.Price)</p>
+                    <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })">Xem chi tiết</a>
+                </div>
             }
         </div>
     </div>
 </div>
 
 <script>
-    let selectedSize = 'Nhỏ';  // Giá trị mặc định
-    let additionalPrice = 0;  // Giá trị thêm vào (đơn vị VND)
+    // Khi người dùng thay đổi size
+    document.querySelectorAll('input[name="size"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const basePrice = parseInt('@Model.Price'); // Giá gốc của sản phẩm
+            const modifier = parseInt(this.getAttribute('data-price-modifier')) || 0; // Giá cộng thêm
+            const newPrice = basePrice + modifier; // Tính giá mới
 
-    function selectOption(element, group, size, price) {
-        // Xóa lớp 'selected' khỏi tất cả các option
-        const options = document.querySelectorAll(`.product_options[data-group="${group}"] .option_button`);
-        options.forEach(option => option.classList.remove('selected'));
+            // Hiển thị giá mới
+            document.getElementById('productPrice').textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newPrice);
+        });
+    });
 
-        // Thêm lớp 'selected' vào option đã chọn
-        element.classList.add('selected');
+    // Kiểm tra size khi gửi form
+    document.getElementById("addToCartForm").addEventListener("submit", function (event) {
+        // Lấy danh sách các nút radio của size
+        const sizeOptions = document.querySelectorAll('input[name="size"]');
+        let sizeSelected = false;
 
-        // Cập nhật giá trị size và giá trị thêm vào
-        selectedSize = size;
-        additionalPrice = price;
-    }
+        // Kiểm tra xem có size nào được chọn không
+        sizeOptions.forEach(option => {
+            if (option.checked) {
+                sizeSelected = true;
+            }
+        });
+
+        // Nếu chưa chọn size, hiển thị thông báo và ngăn form gửi đi
+        if (!sizeSelected) {
+            alert("Vui lòng chọn size trước khi thêm vào giỏ hàng.");
+            event.preventDefault(); // Ngăn không cho form chuyển hướng
+        } else {
+            // Cập nhật giá vào input ẩn trước khi gửi form
+            const selectedRadio = document.querySelector('input[name="size"]:checked');
+            const basePrice = parseInt('@Model.Price');
+            const modifier = parseInt(selectedRadio.getAttribute('data-price-modifier')) || 0;
+            const finalPrice = basePrice + modifier;
+
+            document.querySelector('input[name="price"]').value = finalPrice;  // Cập nhật giá mới vào form nếu cần thiết
+        }
+    });
+
+    // Hàm thay đổi số lượng
     function changeQuantity(amount) {
         const input = document.getElementById("productQuantity");
         let current = parseInt(input.value) || 1;
         const newValue = Math.max(1, current + amount);
         input.value = newValue;
-
-        // Cập nhật trạng thái nút giảm nếu số lượng bằng 1
-        const decreaseButton = document.getElementById("decreaseButton");
-        if (newValue <= 1) {
-            decreaseButton.disabled = true;
-        } else {
-            decreaseButton.disabled = false;
-        }
     }
-
-
-    @*function addToCart(productId) {
-        const quantity = parseInt(document.getElementById("productQuantity").value) || 1;
-
-        $.ajax({
-            url: '@Url.Action("AddToCart", "Product")',
-            type: 'POST',
-            data: {
-                productId: productId,
-                quantity: quantity,
-                size: selectedSize,  // Gửi giá trị size đã chọn
-                additionalPrice: additionalPrice  // Gửi giá trị thêm vào
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert(response.message);
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function () {
-                alert("Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng");
-            }
-        });
-    }
-
-    function buyNow(productId) {
-        const quantity = parseInt(document.getElementById("productQuantity").value) || 1;
-        addToCart(productId);
-
-        window.location.href = '@Url.Action("ViewCart", "Cart")';
-    }*@
 </script>

@@ -36,6 +36,22 @@
     .table-responsive {
         margin-top: 20px;
     }
+    .custom-table thead tr th,
+    .custom-table tbody tr td {
+        border-top: 1px solid #ddd; /* Kẻ đường ngang */
+    }
+
+    .custom-table tbody tr:last-child td {
+        border-bottom: 1px solid #ddd; /* Kẻ đường ngang cuối cùng */
+    }
+
+    .custom-table thead tr th:first-child,
+    .custom-table thead tr th:last-child,
+    .custom-table tbody tr td:first-child,
+    .custom-table tbody tr td:last-child {
+        border-left: none; /* Bỏ kẻ đường dọc */
+        border-right: none; /* Bỏ kẻ đường dọc */
+    }
 </style>
 
 <div class="container mt-4">
@@ -49,7 +65,7 @@
             <div class="mt-4">
                 <h3 class="mb-3">Top 5 sản phẩm bán chạy</h3>
                 <div class="table-responsive">
-                    <table class="table table-borderless">
+                    <table class="table custom-table">
                         <thead>
                             <tr>
                                 <th>Sản phẩm</th>
@@ -87,7 +103,7 @@
         <div class="col-lg-3">
             <div class="card p-4 mb-3 shadow" style="background-color: #FCDAD5;">
                 <h6 class="mb-0">Tổng doanh thu</h6>
-                <h2>@String.Format("{0:0,0} đ", ViewBag.TotalRevenue)</h2>
+                <h2>@String.Format("{0:0,0} đ", ViewBag.TotalRevenue ?? 0)</h2>
             </div>
             <div class="card p-4 mb-3 shadow" style="background-color: #AFD788; ">
                 <h6 class="mb-0">Tổng đơn hàng</h6>

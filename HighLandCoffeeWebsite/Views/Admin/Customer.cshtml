@@ -13,7 +13,7 @@
                 <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Nhập tên tài khoản, người dùng...">
             </div>
             <div class="col-md-4">
-                <button type="submit" class="btn btn-primary w-30">Tìm kiếm</button>
+                <button type="submit" class="btn btn-danger w-30">Tìm kiếm</button>
             </div>
         </div>
     </form>
@@ -59,7 +59,7 @@
                         <td>@user.PhoneNumber</td>
                         <td>@user.Address</td>
                         <td class="text-center">
-                            <a href="@Url.Action("EditUser", "Admin", new { id = user.UserId })" class="btn btn-primary btn-sm">Chỉnh sửa</a>
+                            <a href="@Url.Action("EditUser", "Admin", new { id = user.UserId })" class="btn btn-danger btn-sm">Chỉnh sửa</a>
                             <a href="@Url.Action("DeleteUser", "Admin", new { id = user.UserId })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')">Xóa</a>
                         </td>
                     </tr>

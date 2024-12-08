@@ -106,16 +106,12 @@
     <Content Include="Content\detailspro.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\icomoon.css" />
-    <Content Include="Content\img\about-img.png" />
     <Content Include="Content\img\AMERICANO_NONG.jpg" />
+    <Content Include="Content\img\anhlogin.jpg" />
     <Content Include="Content\img\BAC_XIU.jpg" />
-    <Content Include="Content\img\banner-bg.png" />
-    <Content Include="Content\img\banner-img.png" />
-    <Content Include="Content\img\blog-img1.png" />
-    <Content Include="Content\img\blog-img2.png" />
-    <Content Include="Content\img\BMQ_Ga_Pho_Mai.png" />
-    <Content Include="Content\img\BMQ_Pate.png" />
-    <Content Include="Content\img\bulit-icon.png" />
+    <Content Include="Content\img\Banner1.png" />
+    <Content Include="Content\img\banner2.jpg" />
+    <Content Include="Content\img\banner3.png" />
     <Content Include="Content\img\CAPPUCINO.jpg" />
     <Content Include="Content\img\CARAMEL_FREEZE_PHINDI.jpg" />
     <Content Include="Content\img\CARAMEL_MACCHIATTO.jpg" />
@@ -123,31 +119,31 @@
     <Content Include="Content\img\Chanh_Da_Xay.jpg" />
     <Content Include="Content\img\Citrus_Cafe_De_Tonic.jpg" />
     <Content Include="Content\img\CLASSIC_FREEZE_PHINDI.jpg" />
-    <Content Include="Content\img\client-bg.png" />
-    <Content Include="Content\img\client-img1.png" />
-    <Content Include="Content\img\client-img2.png" />
-    <Content Include="Content\img\client-img3.png" />
     <Content Include="Content\img\Cold_Brew.jpg" />
     <Content Include="Content\img\Cold_Brew_Milk_Foam.jpg" />
     <Content Include="Content\img\Cold_Brew_Peach.jpg" />
     <Content Include="Content\img\COOKIES_FREEZE.jpg" />
-    <Content Include="Content\img\customer-img.png" />
+    <Content Include="Content\img\CROP_Cake_2png.jpg" />
     <Content Include="Content\img\EXPRESSO.jpg" />
-    <Content Include="Content\img\footer-bg.png" />
     <Content Include="Content\img\FREEZE_CHOCO.jpg" />
     <Content Include="Content\img\FREEZE_TRA_XANH.jpg" />
-    <Content Include="Content\img\header-bg.png" />
-    <Content Include="Content\img\icon-4.png" />
-    <Content Include="Content\img\icon-5.png" />
-    <Content Include="Content\img\icon-6.png" />
-    <Content Include="Content\img\icon-7.png" />
-    <Content Include="Content\img\icon-8.png" />
-    <Content Include="Content\img\icon-9.png" />
-    <Content Include="Content\img\img-1.png" />
-    <Content Include="Content\img\img-2.png" />
-    <Content Include="Content\img\img-3.png" />
-    <Content Include="Content\img\img-4.png" />
+    <Content Include="Content\img\Hot_Tea_Set.jpg" />
+    <Content Include="Content\img\KemDi.jpg" />
     <Content Include="Content\img\logoLeft.png" />
+    <Content Include="Content\img\menu1.png" />
+    <Content Include="Content\img\menu2.png" />
+    <Content Include="Content\img\menu3.png" />
+    <Content Include="Content\img\Muffin.jpg" />
+    <Content Include="Content\img\new-branch.jpg" />
+    <Content Include="Content\img\new-products.jpg" />
+    <Content Include="Content\img\new2.jpg" />
+    <Content Include="Content\img\Pastry.jpg" />
+    <Content Include="Content\img\product-guide.jpg" />
+    <Content Include="Content\img\Tra_Tuyet_Phuc_Bon_Tu.png" />
+    <Content Include="Content\img\Tra_Xoai.png" />
+    <Content Include="Content\img\warning.jpg" />
+    <Content Include="Content\img\White_logo800.png" />
+    <Content Include="Content\loginandreg.css" />
     <Content Include="img\imgProduct\=CARAMEL_MACCHIATTO.jpg" />
     <Content Include="img\imgProduct\AMERICANO_NONG.jpg" />
     <Content Include="img\imgProduct\BAC_XIU.jpg" />
@@ -181,10 +177,8 @@
     <Content Include="Content\img\PHINDI_HANH_NHAN.jpg" />
     <Content Include="Content\img\PHINDI_KEM_SUA.jpg" />
     <Content Include="Content\img\Phin_Den_Da.jpg" />
-    <Content Include="Content\img\pngHighlands_Coffee_logo.png" />
     <Content Include="Content\img\SANH_DIEU2.jpg" />
     <Content Include="Content\img\Tac_Da_Vien.jpg" />
-    <Content Include="Content\img\teligram-icon.png" />
     <Content Include="Content\img\Tra_Oi_Hong.jpg" />
     <Content Include="Content\img\Tra_Qua_Mong_Anh_Dao.jpg" />
     <Content Include="Content\img\TRA_SEN_VANG_CU_NANG.jpg" />
@@ -193,7 +187,6 @@
     <Content Include="Content\img\TRA_THANH_DAO-08.jpg" />
     <Content Include="Content\img\TRA_XANH_DAU_DO.jpg" />
     <Content Include="Content\img\TSV.jpg" />
-    <Content Include="Content\index.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.fancybox.min.css" />
     <Content Include="Content\jquery.mCustomScrollbar.min.css" />
@@ -204,7 +197,6 @@
     <Content Include="Content\responsive.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\slick.css" />
-    <Content Include="Content\style.css" />
     <Content Include="Content\User_info.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -231,15 +223,20 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin_Product.cs" />
+    <Compile Include="Models\Coffee.cs">
+      <DependentUpon>Coffee.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Coffee.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Coffee.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\User_Admin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AdminService.cs" />
@@ -286,6 +283,7 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Cart\CheckOut.cshtml" />
+    <Content Include="Views\Store\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -332,11 +330,4 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

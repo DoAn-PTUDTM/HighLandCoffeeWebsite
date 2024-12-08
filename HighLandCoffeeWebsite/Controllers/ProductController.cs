@@ -18,14 +18,6 @@ namespace HighLandCoffeeWebsite.Controllers
 
             return View(product);
         }
-        // private CoffeeDataContext db = new CoffeeDataContext();
-
-        // public ActionResult ViewProduct()
-        // {
-        //     var products = db.Products.ToList();
-        //     return View(products);
-        // }
-
         public ActionResult ProductDetails(int id)
         {
             var product = db.Products.FirstOrDefault(p => p.ProductId == id);
@@ -45,54 +37,58 @@ namespace HighLandCoffeeWebsite.Controllers
             return View(product);
         }
         [HttpPost]
-        public ActionResult AddToCart(int productId, int quantity, string size, int additionalPrice)
+        public ActionResult AddToCart(int prodID, int quantity, string size, int price)
         {
-            var product = db.Products.FirstOrDefault(p => p.ProductId == productId);
+            var product = db.Products.FirstOrDefault(p => p.ProductId == prodID);
 
             if (product == null)
             {
                 return Json(new { success = false, message = "Sản phẩm không tồn tại" });
             }
-
-            var user = Session["User"] as User;  // Cast session về kiểu User
-
-            // Kiểm tra nếu người dùng chưa đăng nhập
+            var user = Session["User"] as User; // Lấy thông tin người dùng từ Session
             if (user == null)
             {
                 return Json(new { success = false, message = "Bạn cần đăng nhập trước khi thêm sản phẩm vào giỏ hàng" });
             }
-
-            // Lấy UserId từ người dùng
             var userId = user.UserId;
 
-            // Kiểm tra xem người dùng đã có sản phẩm này trong giỏ hàng chưa
-            var existingItem = db.ShoppingCarts.FirstOrDefault(s => s.UserId == userId && s.ProductId == productId && s.Size == size);
+            // Kiểm tra sản phẩm với cùng size đã tồn tại trong giỏ hàng chưa
+            var existingItem = db.ShoppingCarts.FirstOrDefault(s => s.UserId == userId && s.ProductId == prodID && s.Size == size);
 
             if (existingItem != null)
             {
-                // Nếu có, cập nhật số lượng
-                existingItem.Quantity += quantity;  // Cộng thêm số lượng vào
-                db.SubmitChanges();  // Lưu lại thay đổi
-                return Json(new { success = true, message = "Sản phẩm đã được cập nhật số lượng trong giỏ hàng" });
+                existingItem.Quantity += quantity;
+                db.SubmitChanges();
+                return RedirectToAction("ViewCart", "Cart");
             }
             else
             {
-                // Nếu không có, thêm sản phẩm mới vào giỏ hàng
                 var cartItem = new ShoppingCart
                 {
                     UserId = userId,
-                    ProductId = productId,
+                    ProductId = prodID,
                     Quantity = quantity,
-                    Size = size
+                    Size = size,
+                    Price = price
                 };
 
                 db.ShoppingCarts.InsertOnSubmit(cartItem);
                 db.SubmitChanges();
+                return RedirectToAction("ViewCart", "Cart");
 
-                return Json(new { success = true, message = "Đã thêm sản phẩm vào giỏ hàng" });
             }
         }
- 
+        public ActionResult Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return RedirectToAction("ViewProduct");
+            }
+            var results = db.Products
+                            .Where(p => p.Name.Contains(query) || p.Category.Name.Contains(query))
+                            .ToList();
 
+            return View("ViewProduct", results);
+        }
     }
 }

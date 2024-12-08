@@ -27,10 +27,10 @@
                     <td>@item.productName</td>
                     <td>@item.productDescription</td>
                     <td>@item.price</td>
-                    <td><img src="@Url.Content("~/img/imgProduct/"+item.images)" width="70px" height="70px" style="padding: 5px" /></td>
+                    <td><img src="@Url.Content("~/Content/img/"+item.images)" width="100px" height="100px" style="padding: 5px" /></td>
                     <td>@item.productTypeID</td>
                     <td>
-                        <a href="~/Admin/DeleteProduct/@item.productID" type="button" class="btn btn-danger mb-3 text-uppercase">deleted</a>
+                        <a href="~/Admin/DeleteProduct/@item.productID" type="button" class="btn btn-danger mb-3 text-uppercase">Deleted</a>
                     </td>
                     <td>
                         <a href="~/Admin/UpdateProduct/@item.productID" type="button" class="btn btn-danger mb-3 text-uppercase">Updated</a>

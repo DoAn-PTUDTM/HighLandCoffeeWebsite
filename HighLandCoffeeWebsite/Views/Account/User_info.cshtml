@@ -17,13 +17,16 @@
                     <li class="nav-item">
                         <a class="nav-link" id="order-history" href="javascript:void(0)">Lịch sử mua hàng</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Logout", "Account")">Đăng xuất</a>
+                    </li>
                 </ul>
             </div>
 
             <!-- Nội dung bên phải -->
             <div class="col-md-9">
+                <!-- Thông tin tài khoản -->
                 <div id="account-info-section">
-                    <!-- Thông tin tài khoản -->
                     <br />
                     <h2 class="mb-4">Thông tin tài khoản</h2>
                     <form id="update-user-form" method="post" action="@Url.Action("UpdateUserInfo", "Account")">
@@ -73,13 +76,12 @@
                         </div>
                     </form>
                 </div>
-
+                <!-- Lịch sử mua hàng -->
                 <div id="order-history-section" style="display:none;">
-                    <!-- Lịch sử mua hàng -->
                     <br />
                     <h2 class="mb-4">Lịch sử mua hàng</h2>
-                    <div class="row" id="order-history-list">
-                        <!-- Các card đơn hàng sẽ được load ở đây -->
+                    <div id="order-history-list" class="container">
+                        <!-- Các thẻ đơn hàng sẽ được load ở đây -->
                     </div>
                 </div>
             </div>
@@ -132,61 +134,91 @@
             }
         });
     });
+    // Chỉnh sửa thông tin
+    const editButton = document.getElementById("edit-button");
+    const saveButton = document.getElementById("save-button");
+    const formFields = document.querySelectorAll("#update-user-form input, #update-user-form textarea");
 
+    editButton.addEventListener("click", function () {
+        formFields.forEach(field => {
+            field.removeAttribute("readonly");
+        });
+        editButton.style.display = "none";
+        saveButton.style.display = "inline-block";
+    });
     // Chuyển đổi ngày JSON
     function parseJsonDate(jsonDate) {
         const timestamp = parseInt(jsonDate.replace(/\/Date\((\d+)\)\//, "$1"));
         const date = new Date(timestamp);
         return date.toLocaleDateString("vi-VN");
     }
-
-    document.addEventListener("DOMContentLoaded", () => {
+    function loadOrderHistory() {
         const orderHistoryList = document.getElementById("order-history-list");
-
-        if (!orderHistoryList) {
-            console.error("Không tìm thấy phần tử order-history-list trong DOM.");
-            return;
-        }
 
         fetch("/Account/GetOrderHistory")
             .then(response => response.json())
             .then(data => {
-                if (!data || !Array.isArray(data)) {
+                orderHistoryList.innerHTML = ""; // Xóa dữ liệu cũ
+
+                if (!data || !Array.isArray(data) || data.length === 0) {
                     orderHistoryList.innerHTML = "<p class='text-center'>Không có lịch sử mua hàng nào.</p>";
                     return;
                 }
 
                 data.forEach(order => {
-                    const items = Array.isArray(order.Items) ? order.Items : [];
-                    const orderDate = new Date(order.OrderDate).toLocaleDateString("vi-VN");
-                    const totalPrice = order.TotalAmount.toLocaleString("vi-VN");
+                    // Chuyển đổi ngày mua
+                    const formattedDate = new Date(order.OrderDate).toLocaleDateString("vi-VN", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    });
 
+                    // Chuẩn bị thẻ hiển thị đơn hàng
                     const card = document.createElement("div");
-                    card.className = "col-12 mb-4";
+                    card.className = "card mb-4 shadow-sm";
 
-                    card.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <img src="${items[0].ImageUrl || ''}" alt="${items[0].Name || 'Sản phẩm'}" class="img-thumbnail me-3" style="width: 100px; height: 100px;">
-                                <div>
-                                    <h6>${items[0].Name || 'Sản phẩm'}</h6>
-                                    <p class="mb-0">Số lượng: ${items[0].Quantity || 0}</p>
-                                    <p class="mb-0">Đơn giá: ${(items[0].UnitPrice || 0).toLocaleString("vi-VN")} ₫</p>
-                                </div>
-                            </div>
+                    let itemsHtml = "";
+                    order.Items.forEach(item => {
+                        itemsHtml += `
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="/Content/img/${item.ImageUrl}" alt="${item.Name}" class="img-thumbnail me-3" style="width: 80px; height: 80px;">
                             <div>
-                                <h5 class="text-success mb-0">Tổng tiền: ${totalPrice} ₫</h5>
-                                <button class="btn btn-info" onclick="reorder(${order.OrderId})">Mua lại</button>
+                                <h6>${item.Name}</h6>
+                                <p class="mb-0">Số lượng: ${item.Quantity}</p>
+                                <p class="mb-0">Thành tiền: ${(item.Price).toLocaleString("vi-VN")} ₫</p>
                             </div>
                         </div>
                     `;
+                    });
+
+                    card.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">Ngày mua: ${formattedDate}</h5>
+                        <div>${itemsHtml}</div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <h5 class="text-success">Tổng tiền: ${order.TotalAmount.toLocaleString("vi-VN")} ₫</h5>
+                            <button class="btn btn-primary reorder-button" data-order-id="${order.OrderId}">Mua lại</button>
+                        </div>
+                    </div>
+                `;
 
                     orderHistoryList.appendChild(card);
                 });
-            })
-            .catch(error => console.error("Có lỗi xảy ra:", error));
-    });
 
+                // Gắn sự kiện cho nút "Mua lại"
+                document.querySelectorAll(".reorder-button").forEach(button => {
+                    button.addEventListener("click", function () {
+                        reorderOrder(this.dataset.orderId);
+                    });
+                });
+            })
+            .catch(error => {
+                console.error("Lỗi khi tải lịch sử mua hàng:", error);
+                orderHistoryList.innerHTML = "<p class='text-center text-danger'>Lỗi khi tải dữ liệu.</p>";
+            });
+    }
     // Xử lý mua lại
     function reorder(orderId) {
         fetch(`/Cart/Reorder?orderId=${orderId}`, { method: "POST" })
@@ -198,5 +230,26 @@
                 }
             })
             .catch(error => console.error("Có lỗi xảy ra:", error));
+    } function reorderOrder(orderId) {
+        fetch("/Account/Reorder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ orderId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message); // Hiển thị thông báo thành công
+                    window.location.href = "/Cart/ViewCart";
+                } else {
+                    alert(data.message || "Không thể mua lại đơn hàng. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi khi thực hiện chức năng mua lại:", error);
+                alert("Có lỗi xảy ra khi mua lại.");
+            });
     }
 </script>

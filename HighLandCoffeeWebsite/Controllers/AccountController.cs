@@ -9,8 +9,8 @@ namespace HighLandCoffeeWebsite.Controllers
 {
     public class AccountController : Controller
     {
-        private CoffeeDataContext db = new CoffeeDataContext();
 
+        private CoffeeDataContext db = new CoffeeDataContext();
         // GET: Login
         [HttpGet]
         public ActionResult Login()
@@ -142,14 +142,11 @@ namespace HighLandCoffeeWebsite.Controllers
                 // Cập nhật lại session với thông tin người dùng mới (nếu cần)
                 Session["User"] = user;
 
-                TempData["SuccessMessage"] = "Cập nhật thông tin thành công!";
-
                 // Load lại trang "User_info" với thông tin người dùng mới
                 return RedirectToAction("User_info");
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Có lỗi xảy ra: " + ex.Message;
                 return RedirectToAction("User_info");
             }
         }
@@ -176,11 +173,67 @@ namespace HighLandCoffeeWebsite.Controllers
                                    d.Product.ImageUrl,
                                    d.Quantity,
                                    d.Price
-                               })
+                               }).ToList()
                            })
-                           .ToList();
+                           .ToList()
+                           .Select(o => new
+                           {
+                               o.OrderId,
+                               OrderDate = o.OrderDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+                       o.TotalAmount,
+                               o.Address,
+                               o.Items
+                           });
 
             return Json(orders, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult Reorder(int orderId)
+        {
+            try
+            {
+                var user = Session["User"] as User;
+                if (user == null)
+                {
+                    return Json(new { success = false, message = "Bạn cần đăng nhập để thực hiện chức năng này." });
+                }
+
+                // Tìm đơn hàng
+                var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId && o.UserId == user.UserId);
+                if (order == null)
+                {
+                    return Json(new { success = false, message = "Không tìm thấy đơn hàng." });
+                }
+
+                // Thêm các sản phẩm của đơn hàng vào giỏ hàng
+                foreach (var item in order.OrderItems)
+                {
+                    var cartItem = db.ShoppingCarts.FirstOrDefault(c => c.UserId == user.UserId && c.ProductId == item.ProductId);
+                    if (cartItem == null)
+                    {
+                        // Thêm sản phẩm mới
+                        db.ShoppingCarts.InsertOnSubmit(new ShoppingCart
+                        {
+                            UserId = user.UserId,
+                            ProductId = item.ProductId,
+                            Size=item.Size,
+                            Quantity = item.Quantity,
+                        });
+                    }
+                    else
+                    {
+                        // Cập nhật số lượng nếu sản phẩm đã có trong giỏ hàng
+                        cartItem.Quantity += item.Quantity;
+                    }
+                }
+                db.SubmitChanges();
+
+                return Json(new { success = true, message = "Đơn hàng đã được thêm vào giỏ hàng." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi: " + ex.Message });
+            }
         }
     }
 }

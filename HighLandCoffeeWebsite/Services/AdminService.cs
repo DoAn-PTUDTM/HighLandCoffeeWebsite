@@ -10,7 +10,7 @@ namespace HighLandCoffeeWebsite.Services
 {
     public class AdminService
     {
-        public string conStr = "Data Source=TUYETCHINH;Initial Catalog=HIGHLANDCOFFEE;PersistSecurityInfo=True;User ID=sa;Password=123456;TrustServerCertificate=True";
+        public string conStr = "Data Source=LTHPLINHCHI;Initial Catalog=HIGHLANDCOFFEEDB;PersistSecurityInfo=True;User ID=sa;Password=123;TrustServerCertificate=True";
         public List<Admin_Product> ExcuteSQL()
         {
             List<Admin_Product> productList = new List<Admin_Product>();

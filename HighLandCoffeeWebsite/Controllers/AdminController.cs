@@ -14,7 +14,6 @@ namespace HighLandCoffeeWebsite.Controllers
     {
         AdminService adminService = new AdminService();
         // GET: AdminHome
-    
         private CoffeeDataContext db = new CoffeeDataContext();
         // GET: AdminHome]
         public ActionResult Customer(string searchTerm, string sortOrder, int page = 1, int pageSize = 5)
@@ -72,7 +71,8 @@ namespace HighLandCoffeeWebsite.Controllers
                                    TotalSold = g.Sum(x => x.Quantity)
                                }).Take(5).ToList();
             // Chuyển đổi anonymous type thành ExpandoObject
-            var topProductsDynamic = topProducts.Select(p => {
+            var topProductsDynamic = topProducts.Select(p =>
+            {
                 dynamic item = new ExpandoObject();
                 item.Name = p.Name;
                 item.ImageUrl = p.ImageUrl;
@@ -160,6 +160,7 @@ namespace HighLandCoffeeWebsite.Controllers
             db.SubmitChanges();
 
             return RedirectToAction("Customer");
+        }
         public ActionResult ViewProduct()
         {
             try

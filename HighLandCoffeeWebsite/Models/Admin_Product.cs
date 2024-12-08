@@ -17,11 +17,6 @@ namespace HighLandCoffeeWebsite.Models
             public decimal price { get; set; }
             [Required(ErrorMessage = "Image can't be blank!")]
             public string images { get; set; }
-            //[Required(ErrorMessage = "The created date product can't be blank!")]
-            //public DateTime CreatedDate { get; set; }
-            //[Required(ErrorMessage = "The updated date product can't be blank!")]
-            //public DateTime UpdatedDate { get; set; }
-
             [Required(ErrorMessage = "The product type can't be blank!")]
             public int productTypeID { get; set; }
 
@@ -38,6 +33,5 @@ namespace HighLandCoffeeWebsite.Models
                 this.images = images;
                 this.productTypeID = productTypeID;
             }
-        
     }
 }
