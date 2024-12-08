@@ -76,7 +76,6 @@
                         </div>
                     </form>
                 </div>
-
                 <!-- Lịch sử mua hàng -->
                 <div id="order-history-section" style="display:none;">
                     <br />
@@ -147,14 +146,12 @@
         editButton.style.display = "none";
         saveButton.style.display = "inline-block";
     });
-
     // Chuyển đổi ngày JSON
     function parseJsonDate(jsonDate) {
         const timestamp = parseInt(jsonDate.replace(/\/Date\((\d+)\)\//, "$1"));
         const date = new Date(timestamp);
         return date.toLocaleDateString("vi-VN");
     }
-
     function loadOrderHistory() {
         const orderHistoryList = document.getElementById("order-history-list");
 
@@ -222,8 +219,6 @@
                 orderHistoryList.innerHTML = "<p class='text-center text-danger'>Lỗi khi tải dữ liệu.</p>";
             });
     }
-
-
     // Xử lý mua lại
     function reorder(orderId) {
         fetch(`/Cart/Reorder?orderId=${orderId}`, { method: "POST" })

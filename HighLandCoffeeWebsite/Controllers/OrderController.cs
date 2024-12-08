@@ -25,7 +25,6 @@ namespace HighLandCoffeeWebsite.Controllers
                                 .Where(o => o.UserId == currentUser.UserId)  // Filter by current user
                                 .OrderByDescending(o => o.OrderDate)  // Order by most recent first
                                 .FirstOrDefault();  // Get only the most recent order
-
             if (latestOrder == null)
             {
                 return View(); // Return an empty view if no orders found
@@ -115,8 +114,6 @@ namespace HighLandCoffeeWebsite.Controllers
                 return RedirectToAction("OrderNotFound");
             }
             ViewBag.ProductName = name;
-
-
             return View(orderDetails);
         }
     }

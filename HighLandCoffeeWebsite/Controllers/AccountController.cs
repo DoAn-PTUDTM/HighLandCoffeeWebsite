@@ -142,14 +142,11 @@ namespace HighLandCoffeeWebsite.Controllers
                 // Cập nhật lại session với thông tin người dùng mới (nếu cần)
                 Session["User"] = user;
 
-                //TempData["SuccessMessage"] = "Cập nhật thông tin thành công!";
-
                 // Load lại trang "User_info" với thông tin người dùng mới
                 return RedirectToAction("User_info");
             }
             catch (Exception ex)
             {
-                //TempData["ErrorMessage"] = "Có lỗi xảy ra: " + ex.Message;
                 return RedirectToAction("User_info");
             }
         }
