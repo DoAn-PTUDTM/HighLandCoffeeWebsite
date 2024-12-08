@@ -178,8 +178,19 @@ namespace HighLandCoffeeWebsite.Controllers
 
         public ActionResult AddProduct()
         {
+            // Lấy danh sách từ bảng Categories
+            var categories = db.Categories.Select(c => new SelectListItem
+            {
+                Text = c.Name, // Tên loại
+                Value = c.CategoryId.ToString() // ID loại
+            }).ToList();
+
+            // Truyền danh sách vào ViewBag để hiển thị trong dropdown
+            ViewBag.Categories = categories;
+
             return View();
         }
+
         [HttpPost]
         public ActionResult AddProduct(Admin_Product product)
         {
@@ -187,19 +198,35 @@ namespace HighLandCoffeeWebsite.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    adminService.AddSql(product.productName, product.productDescription, product.price, product.images, product.productTypeID);
+                    // Lưu sản phẩm vào cơ sở dữ liệu
+                    adminService.AddSql(
+                        product.productName,
+                        product.productDescription,
+                        product.price,
+                        product.images,
+                        product.productTypeID
+                    );
+
                     return RedirectToAction("ViewProduct");
                 }
                 else
                 {
-                    return View();
+                    // Nếu dữ liệu không hợp lệ, nạp lại danh sách ProductTypes
+                    var productTypes = db.Categories.Select(pt => new SelectListItem
+                    {
+                        Text = pt.Name,
+                        Value = pt.CategoryId.ToString()
+                    }).ToList();
+
+                    ViewBag.ProductTypes = productTypes;
+
+                    return View(product);
                 }
             }
             catch (Exception ex)
             {
                 return Content(ex.Message);
             }
-
         }
 
         public ActionResult DeleteProduct(int id)
@@ -277,60 +304,5 @@ namespace HighLandCoffeeWebsite.Controllers
                 return Content(ex.Message);
             }
         }
-        //public ActionResult ManageOrders()
-        //{
-        //    var orders = db.Orders.ToList();
-        //    return View(orders);
-        //}
-
-        //public ActionResult OrderDetails(int id)
-        //{
-        //    using (var db = new CoffeeDataContext())
-        //    {
-        //        var order = db.Orders.FirstOrDefault(o => o.OrderId == id);
-        //        var items = (from oi in db.OrderItems
-        //                     join p in db.Products on oi.ProductId equals p.ProductId
-        //                     where oi.OrderId == id
-        //                     select new
-        //                     {
-        //                         p.Name,
-        //                         oi.Quantity,
-        //                         oi.Size,
-        //                         oi.Price
-        //                     }).ToList();
-
-        //        ViewBag.Order = order;
-        //        return View(items);
-        //    }
-        //}
-        //[HttpPost]
-        //public ActionResult UpdateOrderStatus(int orderId, string newState)
-        //{
-        //    using (var db = new CoffeeDataContext())
-        //    {
-        //        var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
-        //        if (order != null)
-        //        {
-        //            order.State = newState;
-        //            db.SubmitChanges();
-        //        }
-        //        return RedirectToAction("ManageOrders");
-        //    }
-        //}
-        //[HttpPost]
-        //public ActionResult DeleteOrder(int orderId)
-        //{
-        //    using (var db = new CoffeeDataContext())
-        //    {
-        //        var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
-        //        if (order != null)
-        //        {
-        //            db.Orders.DeleteOnSubmit(order);
-        //            db.SubmitChanges();
-        //        }
-        //        return RedirectToAction("ManageOrders");
-        //    }
-        //}
-
     }
 }

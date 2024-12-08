@@ -4,7 +4,36 @@
 }
 
 <link rel="stylesheet" href="~/Content/detailspro.css" />
+<style>
+    .fruite-item {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
+        .fruite-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+    .fruite-img {
+        height: 200px;
+        overflow: hidden;
+        border-radius: 8px 8px 0 0;
+    }
+
+        .fruite-img img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .fruite-item .btn {
+        font-size: 14px;
+    }
+
+    .fruite-item p {
+        margin: 0;
+        line-height: 1.4;
+    }
+</style>
 <div id="productinfor">
     <div class="product_wrap_r container">
         <div class="row">
@@ -65,20 +94,29 @@
         </div>
         <hr />
         <strong>Sản phẩm liên quan</strong><br />
-        <div class="related-products">
-            @foreach (var relatedProduct in ViewBag.RelatedProducts as List<HighLandCoffeeWebsite.Models.Product>)
-            {
-                <div class="product">
-                    <img src="@Url.Content("~/Content/img/" + relatedProduct.ImageUrl)" alt="@relatedProduct.Name" class="img-fluid" style="max-height: 200px; object-fit: cover;">
-                    <h4>@relatedProduct.Name</h4>
-                    <p>@String.Format("{0:0,0} ₫", relatedProduct.Price)</p>
-                    <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })">Xem chi tiết</a>
-                </div>
-            }
-        </div>
+        <div class="row g-4">
+    @foreach (var relatedProduct in ViewBag.RelatedProducts as List<HighLandCoffeeWebsite.Models.Product>)
+    {
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="rounded position-relative fruite-item shadow">
+                            <div class="fruite-img position-relative overflow-hidden">
+                                <img src="@Url.Content("~/Content/img/" + relatedProduct.ImageUrl)" class="img-fluid w-100 rounded-top" alt="">
+                                <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1">Mới</div>
+                            </div>
+                            <div class="p-3 rounded-bottom bg-light">
+                                <h5 class="fw-bold text-center">@relatedProduct.Name</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <br />
+                                    <p class="text-danger fs-5 fw-bold mb-0">@String.Format("{0:0,0} ₫", relatedProduct.Price)</p>
+                                    <a href="@Url.Action("ProductDetails", "Product", new { id = relatedProduct.ProductId })" class="btn btn-outline-danger btn-sm rounded-pill">Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    }
     </div>
 </div>
-
+    </div>
 <script>
     // Khi người dùng thay đổi size
     document.querySelectorAll('input[name="size"]').forEach(radio => {
